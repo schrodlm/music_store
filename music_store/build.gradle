@@ -1,0 +1,27 @@
+plugins {
+	//springboot za nás vytvoří i spustitelný jar, když bysme to buldili jenom s gradlem tak tam nebudou závislosti
+	//na jednotlivé classy
+	id 'org.springframework.boot' version '2.7.5'
+	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'java'
+}
+
+group = 'cz.cvut.fit.tjv'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	//spring boot za nás řeší i verze jednotlivých knihoven, které jsou obsaženy v těch starterech
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
