@@ -77,7 +77,7 @@ public class Order implements  DomainEntity<Integer> {
 
     public void setBuyer(StoreUser buyer) {Buyer = buyer;}
 
-    public void setBought_Items(Collection<Product> bought_Items) {Bought_Items = bought_Items;}
+    public void setBought_Items(Collection <Product> bought_Items) {Bought_Items = bought_Items;}
 
     public void setInvoice(String invoice) {this.invoice = invoice;}
 

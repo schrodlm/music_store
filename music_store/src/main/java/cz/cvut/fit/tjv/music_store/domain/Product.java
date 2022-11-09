@@ -69,7 +69,7 @@ public class Product implements DomainEntity<Integer> {
 
     public Collection<StoreUser> getLikedBy() {return likedBy;}
 
-/*
+    /*
         Setters
      */
 
