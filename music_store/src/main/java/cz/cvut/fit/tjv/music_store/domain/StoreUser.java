@@ -1,0 +1,102 @@
+package cz.cvut.fit.tjv.music_store.domain;
+
+/*
+ This class represents user data object in the database
+ - it is an account of a user who is engaging in our website
+ */
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+
+@Entity
+@Table(name = "users")
+public class StoreUser implements DomainEntity<Integer> {
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "username")
+    private String username;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "surname")
+    private String surname;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "email")
+    private String email;
+    @Column(name = "credit_card")
+    private String credit_card;
+
+    /*
+        Relations
+     */
+
+    @OneToMany(mappedBy = "Buyer")
+    Collection<Order> userOrders;
+
+    @ManyToMany(mappedBy = "likedBy")
+    Collection<Product> likedProducts;
+
+
+
+    /*
+        Constructors
+     */
+    public StoreUser(int id, String username, String name, String surname, String address, String email, String credit_card) {
+        this.id = id;
+        this.username = username;
+        this.name = name;
+        this.surname = surname;
+        this.address = address;
+        this.email = email;
+        this.credit_card = credit_card;
+    }
+
+    public StoreUser(){};
+
+    @Override
+    public Integer getId() {return this.id;}
+
+    public String getUsername() {return username;}
+
+    public String getName() {return name;}
+
+    public String getSurname() {return surname;}
+
+    public String getAddress() {return address;}
+
+    public String getEmail() {return email;}
+
+    public String getCredit_card() {return credit_card;}
+
+    public Collection<Order> getUserOrders() {return userOrders;}
+
+    public Collection<Product> getLikedProducts() {return likedProducts;}
+
+    /*
+        Setters
+     */
+
+    public void setId(int id_user) {this.id = id_user;}
+
+    public void setUsername(String username) {this.username = username;}
+
+    public void setName(String name) {this.name = name;}
+
+    public void setSurname(String surname) {this.surname = surname;}
+
+    public void setAddress(String address) {this.address = address;}
+
+    public void setEmail(String email) {this.email = email;}
+
+    public void setCredit_card(String credit_card) {this.credit_card = credit_card;}
+
+    public void setUserOrders(Collection<Order> userOrders) {this.userOrders = userOrders;}
+
+    public void setLikedProducts(Collection<Product> likedProducts) {this.likedProducts = likedProducts;}
+}
