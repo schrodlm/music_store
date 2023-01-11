@@ -16,7 +16,7 @@ public class Order implements  DomainEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @Column(name = "invoice")
     private String invoice;
@@ -38,7 +38,7 @@ public class Order implements  DomainEntity<Integer> {
     /*
         Constructor
     */
-    public Order(Integer id, StoreUser buyer, ArrayList<Product> bought_Items, String invoice, Integer cost, String order_status, LocalDateTime date_of_order) {
+    public Order(int id, StoreUser buyer, ArrayList<Product> bought_Items, String invoice, Integer cost, String order_status, LocalDateTime date_of_order) {
         this.id = id;
         Buyer = buyer;
         Bought_Items = bought_Items;

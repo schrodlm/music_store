@@ -1,7 +1,6 @@
 package cz.cvut.fit.tjv.music_store.domain;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -18,7 +17,7 @@ public class Product implements DomainEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private int id;
 
     @Column(name = "product_name")
     public String product_name;
@@ -43,7 +42,7 @@ public class Product implements DomainEntity<Integer> {
     /*
         Constructors
      */
-    public Product(Integer id, String product_name, Integer price, Integer discount, Image product_image) {
+    public Product(int id, String product_name, Integer price, Integer discount) {
         this.id = id;
         this.product_name = product_name;
         this.price = price;
@@ -57,7 +56,7 @@ public class Product implements DomainEntity<Integer> {
         Getters
      */
     @Override
-    public Integer getId() {return id;}
+    public Integer getId() {return this.id;}
 
     public String getProduct_name() {return product_name;}
 
