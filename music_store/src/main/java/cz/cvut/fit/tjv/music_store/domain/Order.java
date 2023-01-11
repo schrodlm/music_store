@@ -12,7 +12,7 @@ import java.util.Collection;
 @Entity
 @Table(name = "orders")
 public class Order implements  DomainEntity<Integer> {
-    
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
