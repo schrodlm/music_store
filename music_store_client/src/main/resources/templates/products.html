@@ -30,7 +30,9 @@
       <tr th:each="product : ${allProducts}" >
         <td th:text="${product.product_name}"></td>
         <td th:text="${product.price}"></td>
-        <td><p>Like Product</p> </td>
+        <td><a href="#" th:href="@{'/products/edit?id=' + ${product.id}}">Edit</a></td>
+
+
       </tr>
 
     </tbody>

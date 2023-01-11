@@ -13,6 +13,7 @@ public class ProductToDto implements Function<Product, ProductDto> {
     public ProductDto apply(Product product)
     {
         ProductDto ret = new ProductDto();
+        ret.setId(product.getId());
         ret.setProduct_name(product.getProduct_name());
         ret.setPrice(product.getPrice());
         ret.setDiscount(product.getDiscount());

@@ -20,7 +20,7 @@ public class ProductService {
         productClient.create(post);
     }
 
-    public void setActivePost(long id) {
+    public void setActiveProduct(long id) {
         productClient.setActivePost(id);
         isProductActive = true;
     }

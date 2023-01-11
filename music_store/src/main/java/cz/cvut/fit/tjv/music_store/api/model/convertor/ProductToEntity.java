@@ -10,6 +10,6 @@ import java.util.function.Function;
 public class ProductToEntity implements Function<ProductDto, Product> {
     @Override
     public Product apply(ProductDto productDto) {
-        return new Product(0,productDto.getProduct_name(),productDto.getDiscount(), productDto.getDiscount());
+        return new Product(productDto.getId(),productDto.getProduct_name(), productDto.getPrice(), productDto.getDiscount());
     }
 }

@@ -10,6 +10,7 @@ package cz.cvut.fit.tjv.music_store.api;
 
 import cz.cvut.fit.tjv.music_store.bussiness.AbstractCrudService;
 import cz.cvut.fit.tjv.music_store.domain.DomainEntity;
+import cz.cvut.fit.tjv.music_store.exceptions.EntityStateException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -44,6 +45,11 @@ public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
     @GetMapping
     public Collection<D> readAll(){
         return StreamSupport.stream(service.readAll().spliterator(), false).map(toDtoConvertor).toList();
+    }
+
+    @GetMapping("/{id}")
+    public D readOne(@PathVariable ID id){
+        return toDtoConvertor.apply(service.readById(id).orElseThrow());
     }
 
     @PutMapping ("/{id}")

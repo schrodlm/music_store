@@ -15,7 +15,7 @@ public class UserToDto implements Function<StoreUser,StoreUserDto> {
         StoreUserDto ret = new StoreUserDto();
 
         ret.setId(user.getId());
-        ret.setUsername(ret.getUsername());
+        ret.setUsername(user.getUsername());
         ret.setName(user.getName());
         ret.setSurname(user.getSurname());
         ret.setAddress(user.getAddress());
