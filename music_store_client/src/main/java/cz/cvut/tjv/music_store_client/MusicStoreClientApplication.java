@@ -7,7 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MusicStoreClientApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MusicStoreClientApplication.class, args);
+
+			var app = new SpringApplication(MusicStoreClientApplication.class);
+			app.run(args);
 	}
 
 }
