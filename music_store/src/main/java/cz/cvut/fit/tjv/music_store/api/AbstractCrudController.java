@@ -13,34 +13,43 @@ import cz.cvut.fit.tjv.music_store.domain.DomainEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.function.Function;
+import java.util.stream.StreamSupport;
 
-public abstract class AbstractCrudController<E extends DomainEntity<ID>, ID> {
+public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
 
     protected AbstractCrudService<E,ID> service;
+
+    protected Function<E,D> toDtoConvertor;
+
+    protected Function<D,E> toEntityConvertor;
 
     /*
     Controller
      */
 
-    public AbstractCrudController(AbstractCrudService<E,ID> service){
+    public AbstractCrudController(AbstractCrudService<E,ID> service, Function<E,D> toDtoConvertor, Function<D,E> toEntityConvertor ){
+
         this.service = service;
+        this.toDtoConvertor = toDtoConvertor;
+        this.toEntityConvertor = toEntityConvertor;
     }
 
     //RequestBody means that e
     @PostMapping
-    public E create(@RequestBody E e){
-        return service.create(e);
+    public D create(@RequestBody D e){
+        return toDtoConvertor.apply(service.create(toEntityConvertor.apply(e)));
     }
 
     @GetMapping
-    public Iterable<E> readAll(){
-        return service.readAll();
+    public Collection<D> readAll(){
+        return StreamSupport.stream(service.readAll().spliterator(), false).map(toDtoConvertor).toList();
     }
 
     @PutMapping ("/{id}")
-    public void update(E e, @PathVariable ID id)
+    public void update(D e, @PathVariable ID id)
     {
-        service.update(e);
+        service.update(toEntityConvertor.apply(e));
     }
 
     //DELETE /users/test

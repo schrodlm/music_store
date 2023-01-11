@@ -3,6 +3,7 @@ package cz.cvut.fit.tjv.music_store.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 /*
  This class represents Product data object in the database
@@ -24,7 +25,7 @@ public class Product implements DomainEntity<Integer> {
 
     @Column(name = "price")
     private Integer price;
-    @Column(name = "integer")
+    @Column(name = "discount")
     private Integer discount;
 
 
@@ -32,7 +33,7 @@ public class Product implements DomainEntity<Integer> {
         Relations
      */
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "Bought_Items")
     private Collection<Order> inOrders;
 
     @ManyToMany
@@ -42,10 +43,18 @@ public class Product implements DomainEntity<Integer> {
     /*
         Constructors
      */
+
+    /**
+     *
+     * @param product_name      name of the product, cannot be null
+     * @param price             price of the product, cannot be null
+     * @param discount          discount in percents, can be null
+     *                          -> likedBy & inOrders are always null when creating this Product entity
+     */
     public Product(int id, String product_name, Integer price, Integer discount) {
         this.id = id;
-        this.product_name = product_name;
-        this.price = price;
+        this.product_name = Objects.requireNonNull(product_name);
+        this.price = Objects.requireNonNull(price);
         this.discount = discount;
     }
 

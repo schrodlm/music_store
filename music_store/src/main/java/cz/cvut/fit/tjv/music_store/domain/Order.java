@@ -32,7 +32,7 @@ public class Order implements  DomainEntity<Integer> {
      */
     @ManyToOne
     private StoreUser Buyer;
-    @ManyToMany(mappedBy = "inOrders")
+    @ManyToMany
     private Collection<Product> Bought_Items;
 
     /*
