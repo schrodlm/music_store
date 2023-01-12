@@ -1,10 +1,22 @@
 package cz.cvut.tjv.music_store_client.dto;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+
 public class ProductDto {
 
+
+    @Min(1)
     private int id;
+
+    @NotBlank
     private String product_name;
+    @Min(10)
+    @Max(100000)
     private Integer price;
+    @Min(5)
+    @Max(90)
     private Integer discount;
 
     public ProductDto(int id, String product_name, Integer price, Integer discount) {

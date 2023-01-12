@@ -2,10 +2,13 @@ package cz.cvut.tjv.music_store_client.web;
 
 import cz.cvut.tjv.music_store_client.dto.ProductDto;
 import cz.cvut.tjv.music_store_client.service.ProductService;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.BadRequestException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -38,8 +41,18 @@ public class ProductController {
     }
 
     @PostMapping("/edit")
-    public String submitEditProduct(@Valid @ModelAttribute ProductDto productDto, Model model)
+    public String submitEditProduct(@Valid @ModelAttribute ProductDto productDto, BindingResult bindingResult, Model model)
     {
+
+        boolean errors = bindingResult.hasErrors();
+        if(errors)
+        {
+            model.addAttribute("error",true);
+            model.addAttribute("errorMsg", bindingResult.getAllErrors().get(0).getDefaultMessage());
+            model.addAttribute("product", productDto);
+            return "productEdit";
+        }
+
         productService.setActiveProduct(productDto.getId());
         try {
             productService.update(productDto);
