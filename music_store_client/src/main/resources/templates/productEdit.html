@@ -40,21 +40,20 @@
       <span th:text="${errorMsg}"> </span>
   </div>
   <!-- form děla automaticky POST -->
-  <form action="/products/edit" method="post" th:object="${product}">
+  <form th:action="@{'/products/edit?id=' + ${product.id}}" method="post" th:object="${product}">
     <input type="hidden" th:field="*{id}">
     <div>
       <label for="product_name"> Name of the product </label>
-      <input type="text" id="product_name" name="product_name" class="form-control" th:field="*{product_name}">
+      <input type="text" id="product_name" name="product_name" class="form-control" th:placeholder="*{product_name}">
     </div>
     <div>
       <label for="price"> Author </label>
-      <input type="text" id="price" name="price" class="form-control" th:field="*{price}">
+      <input type="text" id="price" name="price" class="form-control" th:placeholder="*{price}">
       <p th:if="${#fields.hasErrors('price')}" th:errorclass="error" th:errors="*{price}"/>
     </div>
-
     <input type="submit" class="btn btn-primary">
     <input type="reset" class="btn btn-secondary">
-
+  </div>
   </form>
 </body>
 </html>

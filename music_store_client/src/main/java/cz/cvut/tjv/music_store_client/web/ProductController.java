@@ -45,15 +45,17 @@ public class ProductController {
     {
 
         boolean errors = bindingResult.hasErrors();
+
+        productService.setActiveProduct(productDto.getId());
+
         if(errors)
         {
             model.addAttribute("error",true);
             model.addAttribute("errorMsg", bindingResult.getAllErrors().get(0).getDefaultMessage());
-            model.addAttribute("product", productDto);
+            model.addAttribute("product", productService.readOne().orElseThrow());
             return "productEdit";
         }
 
-        productService.setActiveProduct(productDto.getId());
         try {
             productService.update(productDto);
         }

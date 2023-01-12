@@ -60,7 +60,7 @@
                 <tr th:each="product : ${allProducts}">
                   <td><p>BOILERPLATE</p></td>
                   <td th:text="${product.product_name}"></td>
-                  <td th:text="${product.price}"></td>
+                  <td th:text="${product.price} + ' CZK'"></td>
                   <td th:text="${product.discount}"></td>
                   <td><a href="#" th:href="@{'/products/edit?id=' + ${product.id}}"><button class="btn btn-secondary btn-circle btn-circle-sm m-1"><i class="bi-wrench"></i></button></a></td>
 
