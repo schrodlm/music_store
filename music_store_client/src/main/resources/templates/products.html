@@ -38,6 +38,12 @@
 </nav>
 
   <h1> Products </h1>
+
+<div th:if="${deleted}" class="container alert alert-success">
+  <strong> Success! </strong><span th:text="${deleteMessage}"> </span>
+
+</div>
+
 <section class="intro">
   <div class="gradient-custom-1 h-100">
     <div class="mask d-flex align-items-center h-10">
@@ -65,7 +71,16 @@
                   <td th:text="${product.product_name}"></td>
                   <td th:text="${product.price} + ' CZK'"></td>
                   <td th:text="${product.discount}"></td>
-                  <td><a href="#" th:href="@{'/products/edit?id=' + ${product.id}}"><button class="btn btn-secondary btn-circle btn-circle-sm m-1"><i class="bi-wrench"></i></button></a></td>
+                  <td>
+                    <a href="#" th:href="@{'/products/edit?id=' + ${product.id}}"><button class="btn btn-secondary btn-circle btn-circle-sm m-1"><i class="bi-wrench"></i></button></a>
+
+                  </td>
+                  <td>
+                    <form action="#" th:action="@{'products/delete?id=' + ${product.id}}" th:method="delete" >
+                      <input type="hidden" name="_method" value="delete" />
+                      <button type="submit" id="submitButton" class="btn btn-danger btn-circle btn-circle-sm m-1"><i class="bi bi-trash"></i> </button>
+                    </form>
+                  </td>
 
                 </tbody>
               </table>
@@ -77,7 +92,17 @@
   </div>
 
 </section>
+<script>
+  function deleteProduct(id) {
+    if (confirm("Are you sure you want to delete this product?")) {
+      fetch('/products/delete?id=' + id, {
+        method: 'DELETE'
+      });
+    }
+  }
 
+
+</script>
 
 </body>
 </html>

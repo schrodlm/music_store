@@ -24,8 +24,6 @@ public class StoreUser implements DomainEntity<Integer> {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name="password")
-
     @Column(name = "address")
     private String address;
 

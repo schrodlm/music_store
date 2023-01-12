@@ -37,5 +37,10 @@ public class ProductService {
         productClient.updateOne(productDto);
     }
 
+    public void delete()
+    {
+        productClient.delete();
+    }
+
 
 }

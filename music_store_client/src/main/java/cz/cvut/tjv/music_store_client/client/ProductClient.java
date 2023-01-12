@@ -19,7 +19,7 @@ import java.util.logging.Level;
 public class ProductClient {
     private WebTarget productsEndpoint;
     private WebTarget singleTemplateEndpoint;
-    private WebTarget activeProductsEndpoint;
+    private WebTarget activeProductEndpoint;
 
     public ProductClient(@Value("${server.url}") String serverUrl) {
         var client = ClientBuilder.newClient().register(LoggingFeature.builder().level(Level.ALL).build());
@@ -28,7 +28,7 @@ public class ProductClient {
     }
 
     public void setActiveProduct(long id) {
-        activeProductsEndpoint = singleTemplateEndpoint.resolveTemplate("id", id);
+        activeProductEndpoint = singleTemplateEndpoint.resolveTemplate("id", id);
     }
 
     public ProductDto create(ProductDto productDto) {
@@ -38,7 +38,7 @@ public class ProductClient {
     }
 
     public Optional<ProductDto> readOne() {
-        var response = activeProductsEndpoint.request(MediaType.APPLICATION_JSON_TYPE).get();
+        var response = activeProductEndpoint.request(MediaType.APPLICATION_JSON_TYPE).get();
         if (response.getStatus() == 404)
             return Optional.empty();
         if (response.getStatus() == 200)
@@ -53,13 +53,23 @@ public class ProductClient {
 
     public void updateOne(ProductDto productDto)
     {
-        var response = activeProductsEndpoint
+        var response = activeProductEndpoint
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .put(Entity.entity(productDto, MediaType.APPLICATION_JSON_TYPE));
 
         if(response.getStatus() > 200)
             throw new BadRequestException(response.getStatusInfo().getReasonPhrase());
 
+    }
+
+    public void delete()
+    {
+        var response = activeProductEndpoint
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .delete();
+
+        if(response.getStatus() > 200)
+            throw new BadRequestException(response.getStatusInfo().getReasonPhrase());
     }
 
 }
