@@ -16,12 +16,12 @@ public class ProductService {
         this.productClient = productClient;
     }
 
-    public void create(ProductDto post) {
-        productClient.create(post);
+    public ProductDto create(ProductDto productDto) {
+        return productClient.create(productDto);
     }
 
     public void setActiveProduct(long id) {
-        productClient.setActivePost(id);
+        productClient.setActiveProduct(id);
         isProductActive = true;
     }
 
@@ -36,5 +36,6 @@ public class ProductService {
     {
         productClient.updateOne(productDto);
     }
+
 
 }

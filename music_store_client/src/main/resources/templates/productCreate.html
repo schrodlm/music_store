@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Music Store</a>
+    <button
+            class="navbar-toggler"
+            type="button"
+            data-mdb-toggle="collapse"
+            data-mdb-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+    >
+      <i class="fas bi-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-link active" aria-current="page" href="/">Home</a>
+        <a class="nav-link" href="/users"><i class="bi bi-person"></i> User</a>
+        <a class="nav-link" href="/products">Products</a>
+        <a class="nav-link" href="/orders">Orders</a>
+        <a class="nav-link" href="/liked">Liked Products</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<h1> Create Product </h1>
+<div th:if="${error}" class="alert alert-danger">
+  <span th:text="${errorMsg}"> </span>
+</div>
+
+
+<!-- form děla automaticky POST -->
+<form th:action="@{'/products/create'}" method="post" th:object="${product}">
+  <input  type="hidden" th:field="*{id}">
+  <div>
+    <label for="product_name"> Name of the product </label>
+    <input type="text" id="product_name" name="product_name" class="form-control" placeholder="Name" th:field="*{product_name}">
+  </div>
+  <div>
+    <label for="price"> Price </label>
+    <input type="text" id="price" name="price" class="form-control" placeholder="Price (CZK)" th:field="*{price}">
+  </div>
+
+  <div>
+    <label for="discount"> Discount </label>
+    <input type="text" id="discount" name="discount" class="form-control"  placeholder="Discount (%)" th:field="*{discount}">
+  </div>
+
+  <input type="submit" class="btn btn-primary">
+  <input type="reset" class="btn btn-secondary">
+  </div>
+</form>
+
+</body>
+</html>

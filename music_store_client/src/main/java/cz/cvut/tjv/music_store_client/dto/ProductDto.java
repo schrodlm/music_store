@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 public class ProductDto {
 
 
-    @Min(1)
+    @Min(0)
     private int id;
 
     @NotBlank
@@ -25,7 +25,7 @@ public class ProductDto {
         this.price = price;
         this.discount = discount;
     }
-
+    public ProductDto(){};
     public int getId() {
         return id;
     }

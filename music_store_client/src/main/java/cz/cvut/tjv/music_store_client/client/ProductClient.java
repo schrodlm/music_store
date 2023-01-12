@@ -27,14 +27,14 @@ public class ProductClient {
         singleTemplateEndpoint = productsEndpoint.path("/{id}");
     }
 
-    public void setActivePost(long id) {
+    public void setActiveProduct(long id) {
         activeProductsEndpoint = singleTemplateEndpoint.resolveTemplate("id", id);
     }
 
-    public ProductDto create(ProductDto post) {
+    public ProductDto create(ProductDto productDto) {
         return productsEndpoint
                 .request(MediaType.APPLICATION_JSON_TYPE)
-                .post(Entity.entity(post, MediaType.APPLICATION_JSON_TYPE), ProductDto.class);
+                .post(Entity.entity(productDto, MediaType.APPLICATION_JSON_TYPE), ProductDto.class);
     }
 
     public Optional<ProductDto> readOne() {
@@ -61,4 +61,5 @@ public class ProductClient {
             throw new BadRequestException(response.getStatusInfo().getReasonPhrase());
 
     }
+
 }
