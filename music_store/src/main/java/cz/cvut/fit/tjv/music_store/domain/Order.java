@@ -36,9 +36,9 @@ public class Order implements  DomainEntity<Integer> {
     /*
         Relations
      */
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private StoreUser Buyer;
-    @ManyToMany
+    @ManyToMany(cascade =  CascadeType.REMOVE)
     private Collection<Product> Bought_Items;
 
     /*

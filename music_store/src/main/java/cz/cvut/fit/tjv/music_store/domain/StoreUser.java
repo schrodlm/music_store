@@ -36,10 +36,10 @@ public class StoreUser implements DomainEntity<Integer> {
         Relations
      */
 
-    @OneToMany(mappedBy = "Buyer")
+    @OneToMany(mappedBy = "Buyer",  cascade = CascadeType.REMOVE)
     Collection<Order> userOrders;
 
-    @ManyToMany(mappedBy = "likedBy")
+    @ManyToMany(mappedBy = "likedBy",  cascade = CascadeType.REMOVE)
     Collection<Product> likedProducts;
 
 
