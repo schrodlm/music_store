@@ -11,7 +11,10 @@ package cz.cvut.fit.tjv.music_store.api;
 import cz.cvut.fit.tjv.music_store.bussiness.AbstractCrudService;
 import cz.cvut.fit.tjv.music_store.domain.DomainEntity;
 import cz.cvut.fit.tjv.music_store.exceptions.EntityStateException;
+import cz.cvut.fit.tjv.music_store.exceptions.InvalidStateException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 import java.util.function.Function;
@@ -53,9 +56,18 @@ public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
     }
 
     @PutMapping ("/{id}")
-    public void update(D e, @PathVariable ID id)
+    public D update(@RequestBody D e, @PathVariable ID id)
     {
-        service.update(toEntityConvertor.apply(e));
+        try {
+            return toDtoConvertor.apply(service.update(toEntityConvertor.apply(e), id));
+        }
+        catch(EntityStateException ex){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        catch(InvalidStateException ex) //ID nesedí v datech
+        {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID in the payload does not match in URI");
+        }
     }
 
     //DELETE /users/test

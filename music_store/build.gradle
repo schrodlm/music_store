@@ -18,6 +18,7 @@ dependencies {
 	//spring boot za nás řeší i verze jednotlivých knihoven, které jsou obsaženy v těch starterech
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation('org.springframework.boot:spring-boot-starter-validation')
 	runtimeOnly 'org.postgresql:postgresql'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }

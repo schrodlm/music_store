@@ -1,6 +1,9 @@
 package cz.cvut.fit.tjv.music_store.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,11 +19,14 @@ public class Order implements  DomainEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotEmpty
     private int id;
 
     @Column(name = "invoice")
     private String invoice;
     @Column(name = "cost")
+    @Min(10)
+    @Max(1000000)
     private Integer cost;
     private String order_status;
     @Column(name = "date_of_order")
@@ -72,7 +78,7 @@ public class Order implements  DomainEntity<Integer> {
     /*
         Setters
      */
-
+    @Override
     public void setId(Integer id_order) {this.id = id_order;}
 
     public void setBuyer(StoreUser buyer) {Buyer = buyer;}

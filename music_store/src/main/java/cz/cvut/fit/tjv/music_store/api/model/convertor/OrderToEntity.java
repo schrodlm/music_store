@@ -32,7 +32,7 @@ public class OrderToEntity implements Function<OrderDto, Order> {
             p.add(productService.readById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Item does not exist")));
         }
         if(userService.readById(orderDto.getBuyer_id()) == null)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Author username missing");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Buyers id missing");
 
         if(orderDto.getItems_id().isEmpty() == true)
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Items in this order are empty");

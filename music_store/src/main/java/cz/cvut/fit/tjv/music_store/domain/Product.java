@@ -1,6 +1,8 @@
 package cz.cvut.fit.tjv.music_store.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
@@ -24,6 +26,8 @@ public class Product implements DomainEntity<Integer> {
     public String product_name;
 
     @Column(name = "price")
+    @Min(10)
+    @Max(1000000)
     private Integer price;
     @Column(name = "discount")
     private Integer discount;
@@ -80,7 +84,7 @@ public class Product implements DomainEntity<Integer> {
     /*
         Setters
      */
-
+    @Override
     public void setId(Integer id_product) {this.id = id_product;}
 
     public void setProduct_name(String product_name) {this.product_name = product_name;}

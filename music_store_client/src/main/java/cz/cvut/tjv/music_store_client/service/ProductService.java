@@ -31,4 +31,10 @@ public class ProductService {
 
     public Optional<ProductDto> readOne() {return productClient.readOne();}
     public Collection<ProductDto> readAll() {return productClient.readAll();}
+
+    public void update(ProductDto productDto)
+    {
+        productClient.updateOne(productDto);
+    }
+
 }

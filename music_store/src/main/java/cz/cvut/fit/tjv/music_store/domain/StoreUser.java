@@ -81,8 +81,8 @@ public class StoreUser implements DomainEntity<Integer> {
     /*
         Setters
      */
-
-    public void setId(int id_user) {this.id = id_user;}
+    @Override
+    public void setId(Integer id_user) {this.id = id_user;}
 
     public void setUsername(String username) {this.username = username;}
 

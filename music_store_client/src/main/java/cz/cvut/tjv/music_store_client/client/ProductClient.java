@@ -1,6 +1,7 @@
 package cz.cvut.tjv.music_store_client.client;
 
 import cz.cvut.tjv.music_store_client.dto.ProductDto;
+import jakarta.ws.rs.BadRequestException;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
@@ -48,5 +49,16 @@ public class ProductClient {
     public Collection<ProductDto> readAll()
     {
         return Arrays.asList(productsEndpoint.request(MediaType.APPLICATION_JSON_TYPE).get(ProductDto[].class));
+    }
+
+    public void updateOne(ProductDto productDto)
+    {
+        var response = activeProductsEndpoint
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .put(Entity.entity(productDto, MediaType.APPLICATION_JSON_TYPE));
+
+        if(response.getStatus() > 200)
+            throw new BadRequestException(response.getStatusInfo().getReasonPhrase());
+
     }
 }

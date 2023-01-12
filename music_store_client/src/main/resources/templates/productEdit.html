@@ -18,16 +18,21 @@
 
 
   <h1> Product Edit </h1>
-
-  <form>
+  <div th:if="${error}" class="alert alert-danger">
+      <span th:text="${errorMsg}"> </span>
+  </div>
+  <!-- form děla automaticky POST -->
+  <form action="/products/edit" method="post" th:object="${product}">
+    <input type="hidden" th:field="*{id}">
     <div>
-    <input type="text" id="contents" name="contents" class="form-control">
-    <label for="contents"> Text Contents </label>
-  </div>
-  <div>
-    <input type="text" id="author" name="author" class="form-control">
-    <label for="author"> Author </label>
-  </div>
+      <label for="product_name"> Name of the product </label>
+      <input type="text" id="product_name" name="product_name" class="form-control" th:field="*{product_name}">
+    </div>
+    <div>
+      <label for="price"> Author </label>
+      <input type="text" id="price" name="price" class="form-control" th:field="*{price}">
+      <p th:if="${#fields.hasErrors('price')}" th:errorclass="error" th:errors="*{price}"/>
+    </div>
 
     <input type="submit" class="btn btn-primary">
     <input type="reset" class="btn btn-secondary">

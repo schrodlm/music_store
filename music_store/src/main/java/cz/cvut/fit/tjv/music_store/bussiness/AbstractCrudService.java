@@ -2,6 +2,7 @@ package cz.cvut.fit.tjv.music_store.bussiness;
 
 import cz.cvut.fit.tjv.music_store.domain.DomainEntity;
 import cz.cvut.fit.tjv.music_store.exceptions.EntityStateException;
+import cz.cvut.fit.tjv.music_store.exceptions.InvalidStateException;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Collection;
@@ -40,11 +41,15 @@ public class AbstractCrudService<E extends DomainEntity<K>, K> {
     /*
         Attempts to replace already stored entity
      */
-    public E update(E entity) throws EntityStateException{
+    public E update(E entity, K id) throws EntityStateException{
+        entity.setId(id);
+
         if(repository.existsById((entity.getId())))
             return repository.save(entity);
+
         else
             throw new EntityStateException(entity);
+
     }
 
     public void deleteById(K id)

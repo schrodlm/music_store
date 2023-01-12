@@ -11,4 +11,5 @@ package cz.cvut.fit.tjv.music_store.domain;
 public interface DomainEntity<T> {
 
     T getId();
+    void setId(T id);
 }
