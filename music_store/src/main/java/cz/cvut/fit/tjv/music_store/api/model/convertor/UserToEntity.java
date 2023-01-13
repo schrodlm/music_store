@@ -11,6 +11,6 @@ public class UserToEntity implements Function<StoreUserDto,StoreUser> {
     @Override
     public StoreUser apply(StoreUserDto userDto)
     {
-        return new StoreUser(userDto.getId(), userDto.getUsername(), userDto.getName(), userDto.getSurname(), userDto.getAddress(), userDto.getEmail(), userDto.getCredit_card());
+        return new StoreUser(userDto.getId(), userDto.getUsername(), userDto.getPassword(), userDto.getRole(),userDto.getName(), userDto.getSurname(), userDto.getAddress(), userDto.getEmail(), userDto.getCredit_card());
     }
 }

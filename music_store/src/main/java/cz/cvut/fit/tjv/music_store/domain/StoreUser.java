@@ -32,6 +32,12 @@ public class StoreUser implements DomainEntity<Integer> {
     @Column(name = "credit_card")
     private String credit_card;
 
+    @Column(name="password")
+    private String password;
+
+    @Column(name="role")
+    private String role;
+
     /*
         Relations
      */
@@ -47,9 +53,11 @@ public class StoreUser implements DomainEntity<Integer> {
     /*
         Constructors
      */
-    public StoreUser(int id, String username, String name, String surname, String address, String email, String credit_card) {
+    public StoreUser(int id, String username,String password, String role, String name, String surname, String address, String email, String credit_card) {
         this.id = id;
         this.username = username;
+        this.password = password;
+        this.role = role;
         this.name = name;
         this.surname = surname;
         this.address = address;
@@ -99,4 +107,21 @@ public class StoreUser implements DomainEntity<Integer> {
     public void setUserOrders(Collection<Order> userOrders) {this.userOrders = userOrders;}
 
     public void setLikedProducts(Collection<Product> likedProducts) {this.likedProducts = likedProducts;}
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

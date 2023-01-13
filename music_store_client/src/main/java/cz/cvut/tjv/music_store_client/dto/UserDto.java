@@ -1,6 +1,6 @@
-package cz.cvut.fit.tjv.music_store.api.model;
+package cz.cvut.tjv.music_store_client.dto;
 
-public class StoreUserDto {
+public class UserDto {
 
     private int id;
     private String username;
