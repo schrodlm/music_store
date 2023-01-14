@@ -36,9 +36,6 @@ public class ProductService {
 
     public void update(ProductDto productDto)
     {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        var roles = authentication.getAuthorities();
         productClient.updateOne(productDto);
     }
 

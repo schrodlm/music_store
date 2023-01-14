@@ -7,6 +7,7 @@ import cz.cvut.tjv.music_store_client.dto.UserDto;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
@@ -23,7 +24,9 @@ public class UserService {
         return userClient.create(userDto);
     }
 
-    public void delete() {userClient.delete();}
+    public void delete(){
+        userClient.delete();
+    }
 
     public void deleteByUsername(String username)
     {
@@ -45,6 +48,9 @@ public class UserService {
 
     public Optional<UserDto> readOne() { return userClient.readOne();}
 
+    public Collection<UserDto> readAll(){
+        return userClient.readAll();
+    }
     public Optional<UserDto> findById(long id)
     {
         setActiveUser(id);
@@ -55,5 +61,11 @@ public class UserService {
     {
         setActiveUser(username);
         return readOne();
+    }
+
+    public void update(UserDto userDto)
+    {
+        setActiveUser(userDto.getId());
+        userClient.updateOne(userDto);
     }
 }

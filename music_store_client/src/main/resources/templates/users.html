@@ -32,6 +32,10 @@
         </div>
     </div>
 </nav>
+<div th:if="${deleted}" class="container alert alert-success">
+    <strong> Success! </strong><span th:text="${deleteMessage}"> </span>
+
+</div>
 
     <section class="intro">
         <div class="gradient-custom-1 h-100">
@@ -46,19 +50,28 @@
                                         <th scope="col">USERS</th>
                                         <th scope="col">NAME</th>
                                         <th scope="col">CONTACTS</th>
-                                        <th scope="col">AGE</th>
                                         <th scope="col">ADDRESS</th>
-                                        <th scope="col">SALARY</th>
+                                        <th scope="col">ROLE</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <th scope="row" style="color: #666666;">Tiger Nixon</th>
-                                        <td>System Architect</td>
-                                        <td>tnixon12@example.com</td>
-                                        <td>61</td>
-                                        <td>Edinburgh</td>
-                                        <td>$320,800</td>
+                                    <tr th:each="user : ${allUsers}">
+                                        <th th:text="${user.username}"></th>
+                                        <td th:text="${user.name} + ' ' + ${user.surname}"></td>
+                                        <td th:text="${user.email}"></td>
+                                        <td th:text="${user.address}"></td>
+                                        <td th:text="${user.role}"></td>
+                                        <td>
+                                            <a href="#" th:href="@{'/users/edit?usrname=' + ${user.username}}"><button class="btn btn-secondary btn-circle btn-circle-sm m-1"><i class="bi-wrench"></i></button></a>
+
+                                        </td>
+                                        <td>
+                                            <form action="#" th:action="@{'users/delete?id=' + ${user.id}}" th:method="delete" >
+                                                <input type="hidden" name="_method" value="delete" />
+                                                <button type="submit" id="submitButton" class="btn btn-danger btn-circle btn-circle-sm m-1"><i class="bi bi-trash"></i> </button>
+                                            </form>
+                                        </td>
+
                                     </tr>
                                     </tbody>
                                 </table>

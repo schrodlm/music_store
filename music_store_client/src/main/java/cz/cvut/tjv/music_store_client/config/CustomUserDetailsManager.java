@@ -40,7 +40,7 @@ public class CustomUserDetailsManager implements UserDetailsManager {
     public void updateUser(UserDetails user) {
         UserDto existingUser = service.findByUsername(user.getUsername()).orElseThrow();
         existingUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        existingUser.setRole("ADMIN");
+        existingUser.setRole("USER");
         service.create(existingUser);
     }
 
