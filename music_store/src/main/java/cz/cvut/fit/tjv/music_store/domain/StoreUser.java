@@ -5,6 +5,8 @@ package cz.cvut.fit.tjv.music_store.domain;
  - it is an account of a user who is engaging in our website
  */
 
+import cz.cvut.fit.tjv.music_store.api.ProductController;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,7 +47,7 @@ public class StoreUser implements DomainEntity<Integer> {
     @OneToMany(mappedBy = "Buyer",  cascade = CascadeType.REMOVE)
     Collection<Order> userOrders;
 
-    @ManyToMany(mappedBy = "likedBy",  cascade = CascadeType.REMOVE)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     Collection<Product> likedProducts;
 
 
@@ -53,7 +55,7 @@ public class StoreUser implements DomainEntity<Integer> {
     /*
         Constructors
      */
-    public StoreUser(int id, String username,String password, String role, String name, String surname, String address, String email, String credit_card) {
+    public StoreUser(int id, String username, String password, String role, String name, String surname, String address, String email, String credit_card) {
         this.id = id;
         this.username = username;
         this.password = password;

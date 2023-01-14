@@ -21,10 +21,16 @@ public class ProductClient {
     private WebTarget singleTemplateEndpoint;
     private WebTarget activeProductEndpoint;
 
+    private WebTarget favouriteProductsEndpoint;
+
+
     public ProductClient(@Value("${server.url}") String serverUrl) {
         var client = ClientBuilder.newClient().register(LoggingFeature.builder().level(Level.ALL).build());
         productsEndpoint = client.target(serverUrl + "/products");
         singleTemplateEndpoint = productsEndpoint.path("/{id}");
+        favouriteProductsEndpoint = productsEndpoint.path("/{userId}/liked");
+
+
     }
 
     public void setActiveProduct(long id) {
@@ -50,6 +56,13 @@ public class ProductClient {
     {
         return Arrays.asList(productsEndpoint.request(MediaType.APPLICATION_JSON_TYPE).get(ProductDto[].class));
     }
+
+    public Collection<ProductDto> readAllFavourites(Integer loggedUserId)
+    {
+        activeProductEndpoint = favouriteProductsEndpoint.resolveTemplate("userId",loggedUserId);
+        return Arrays.asList(activeProductEndpoint.request(MediaType.APPLICATION_JSON_TYPE).get(ProductDto[].class));
+    }
+
 
     public void updateOne(ProductDto productDto)
     {

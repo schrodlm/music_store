@@ -1,9 +1,11 @@
 package cz.cvut.fit.tjv.music_store.bussiness;
 
 import cz.cvut.fit.tjv.music_store.dao.StoreUserRepository;
+import cz.cvut.fit.tjv.music_store.domain.Product;
 import cz.cvut.fit.tjv.music_store.domain.StoreUser;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.Optional;
 
 @Service

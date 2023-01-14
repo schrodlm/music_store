@@ -1,5 +1,8 @@
 package cz.cvut.fit.tjv.music_store.api.model;
 
+import java.util.Collection;
+import java.util.Optional;
+
 public class StoreUserDto {
 
     private int id;
@@ -14,6 +17,15 @@ public class StoreUserDto {
     private String email;
     private String credit_card;
 
+    private Collection<Integer> likedProducts;
+
+    public Collection<Integer> getLikedProducts() {
+        return likedProducts;
+    }
+
+    public void setLikedProducts(Collection<Integer> likedProducts) {
+        this.likedProducts = likedProducts;
+    }
 
     public int getId() {
         return id;

@@ -14,6 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Collection;
+
 @Controller
 @RequestMapping("/users")
 public class UserController {
@@ -109,5 +111,33 @@ public class UserController {
 
         return "redirect:/users";
     }
+
+    @PostMapping("/liked/{id}")
+    public String submitEditUser(@PathVariable("id") Integer productId,  Model model, RedirectAttributes redirectAttributes)
+    {
+
+
+        UserDto loggedUser = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElseThrow();
+
+        //User already has this item as favourite
+        if(loggedUser.getLikedProducts().contains(productId))
+        {
+            redirectAttributes.addFlashAttribute("favouriteFail", true);
+            return "redirect:/products";
+        }
+
+
+        Collection<Integer> newLiked = loggedUser.getLikedProducts();
+        newLiked.add(productId);
+
+        userService.update(loggedUser);
+
+
+        redirectAttributes.addFlashAttribute("favouriteSuccess", true);
+
+        return "redirect:/products";
+    }
+
+
 }
 

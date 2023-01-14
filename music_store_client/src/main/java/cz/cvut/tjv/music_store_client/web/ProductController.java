@@ -1,10 +1,14 @@
 package cz.cvut.tjv.music_store_client.web;
 
 import cz.cvut.tjv.music_store_client.dto.ProductDto;
+import cz.cvut.tjv.music_store_client.dto.UserDto;
 import cz.cvut.tjv.music_store_client.service.ProductService;
+import cz.cvut.tjv.music_store_client.service.UserService;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.BadRequestException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,11 +16,16 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Collection;
+
 @Controller
 @RequestMapping("/products")
 public class ProductController {
 
     private ProductService productService;
+
+    @Autowired
+    private UserService userService;
 
     public ProductController(ProductService productService) {
         this.productService = productService;
@@ -118,5 +127,31 @@ public class ProductController {
 
         return "redirect:/products";
     }
+
+    @GetMapping("/liked")
+    public String showLikedProducts(Model model)
+    {
+
+            model.addAttribute("likedProducts", productService.readAllFavourites());
+            return "likedProducts";
+
+    }
+
+    @PostMapping("/liked/{productId}")
+    public String removeLikedProduct(@PathVariable("productId") Integer productId,Model model)
+    {
+        UserDto loggedUser = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElseThrow();
+
+        Collection<Integer> newLiked = loggedUser.getLikedProducts();
+        newLiked.remove(productId);
+
+        userService.update(loggedUser);
+
+        model.addAttribute("favouriteDeletedSuccess", true);
+
+        return "likedProducts";
+
+    }
+
 
 }

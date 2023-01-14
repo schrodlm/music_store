@@ -2,6 +2,7 @@ package cz.cvut.tjv.music_store_client.service;
 
 import cz.cvut.tjv.music_store_client.client.ProductClient;
 import cz.cvut.tjv.music_store_client.dto.ProductDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,14 @@ public class ProductService {
     public Optional<ProductDto> readOne() {return productClient.readOne();}
     public Collection<ProductDto> readAll() {return productClient.readAll();}
 
+    @Autowired
+    UserService userService;
+    public Collection<ProductDto> readAllFavourites()
+    {
+        Integer loggedUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElseThrow().getId();
+
+        return productClient.readAllFavourites(loggedUserId);
+    }
     public void update(ProductDto productDto)
     {
         productClient.updateOne(productDto);

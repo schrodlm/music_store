@@ -51,7 +51,6 @@ public class AbstractCrudService<E extends DomainEntity<K>, K> {
             throw new EntityStateException(entity);
 
     }
-
     public void deleteById(K id)
     {
         repository.deleteById(id);

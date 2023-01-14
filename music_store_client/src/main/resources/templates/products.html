@@ -41,8 +41,15 @@
 
 <div th:if="${deleted}" class="container alert alert-success">
   <strong> Success! </strong><span th:text="${deleteMessage}"> </span>
+  </div>
 
-</div>
+  <div class="container" th:if="${favouriteSuccess}">
+    <div class="alert alert-success"> Product was added to your favourites! </div>
+  </div>
+
+  <div class="container" th:if="${favouriteFail}">
+    <div class="alert alert-warning">Product is already in your favourites! </div>
+  </div>
 
 <section class="intro">
   <div class="gradient-custom-1 h-100">
@@ -79,6 +86,12 @@
                     <form action="#" th:action="@{'products/delete?id=' + ${product.id}}" th:method="delete" >
                       <input type="hidden" name="_method" value="delete" />
                       <button type="submit" id="submitButton" class="btn btn-danger btn-circle btn-circle-sm m-1"><i class="bi bi-trash"></i> </button>
+                    </form>
+                  </td>
+                  <td>
+                    <form th:action="@{'/users/liked/' + ${product.id}}" method="post">
+                      <input type="hidden" name="_method" value="post"/>
+                      <button class="btn btn-warning btn-circle btn-circle-sm m-1" type="submit"><i class="bi-star"></i></button>
                     </form>
                   </td>
 
