@@ -52,7 +52,8 @@ public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
 
     @GetMapping("/{id}")
     public D readOne(@PathVariable ID id){
-        return toDtoConvertor.apply(service.readById(id).orElseThrow());
+
+        return toDtoConvertor.apply(service.readById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
     @PutMapping ("/{id}")
