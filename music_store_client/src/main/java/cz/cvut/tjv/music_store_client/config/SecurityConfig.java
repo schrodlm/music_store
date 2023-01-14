@@ -48,20 +48,27 @@ public class SecurityConfig{
 
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 
-        httpSecurity
-                .authorizeHttpRequests()
-               // .requestMatchers("/products/**").hasRole("ADMIN")
-                .anyRequest().permitAll()
-                .and()
-                .formLogin()
-                ;
+        http.csrf().disable()
+                .authorizeHttpRequests((authorize) ->
+                        authorize.requestMatchers(new AntPathRequestMatcher("/users/register/**")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/products/edit")).hasRole("ADMIN")
+                                .anyRequest().authenticated()
+                ).formLogin(
+                        form -> form
+                                .loginPage("/login")
+                                .loginProcessingUrl("/login")
+                                .defaultSuccessUrl("/users")
+                                .permitAll()
+                ).logout(
+                        logout -> logout
+                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                                .permitAll()
+                );
+        return http.build();
 
-        httpSecurity.csrf().disable();
-
-        return httpSecurity.build();
     }
 
 

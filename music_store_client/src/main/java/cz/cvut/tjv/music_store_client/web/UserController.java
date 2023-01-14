@@ -29,10 +29,7 @@ public class UserController {
     @GetMapping
     public String users(Model model){return "users";}
 
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
+
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
