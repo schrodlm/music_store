@@ -2,6 +2,8 @@ package cz.cvut.tjv.music_store_client.service;
 
 import cz.cvut.tjv.music_store_client.client.ProductClient;
 import cz.cvut.tjv.music_store_client.dto.ProductDto;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
@@ -34,6 +36,9 @@ public class ProductService {
 
     public void update(ProductDto productDto)
     {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+        var roles = authentication.getAuthorities();
         productClient.updateOne(productDto);
     }
 
