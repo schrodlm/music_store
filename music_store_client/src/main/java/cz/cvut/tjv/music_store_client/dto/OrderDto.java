@@ -1,4 +1,5 @@
-package cz.cvut.fit.tjv.music_store.api.model;
+package cz.cvut.tjv.music_store_client.dto;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -69,3 +70,4 @@ public class OrderDto {
         this.date_of_order = date_of_order;
     }
 }
+

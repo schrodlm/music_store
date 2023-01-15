@@ -88,16 +88,14 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String submitEditUser(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, Model model)
+    public String submitEditUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult, Model model)
     {
         if(bindingResult.hasErrors())
         {
-            model.addAttribute("error",true);
-            model.addAttribute("errorMsg", bindingResult.getAllErrors().get(0).getDefaultMessage());
-            model.addAttribute("user", userService.readOne().orElseThrow());
+            model.addAttribute("user",userDto);
             return "userEdit";
         }
-        userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        //userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
 
         try{
             userService.update(userDto);

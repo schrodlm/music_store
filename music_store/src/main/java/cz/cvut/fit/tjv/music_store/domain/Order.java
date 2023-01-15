@@ -19,7 +19,6 @@ public class Order implements  DomainEntity<Integer> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotEmpty
     private int id;
 
     @Column(name = "invoice")

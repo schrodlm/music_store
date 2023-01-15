@@ -43,19 +43,12 @@
   </div>
 </nav>
 
-  <h1> Products </h1>
+<h1> Orders </h1>
 
 <div th:if="${deleted}" class="container alert alert-success">
   <strong> Success! </strong><span th:text="${deleteMessage}"> </span>
-  </div>
+</div>
 
-  <div class="container" th:if="${favouriteSuccess}">
-    <div class="alert alert-success"> Product was added to your favourites! </div>
-  </div>
-
-  <div class="container" th:if="${favouriteFail}">
-    <div class="alert alert-warning">Product is already in your favourites! </div>
-  </div>
 
 <section class="intro">
   <div class="gradient-custom-1 h-100">
@@ -63,46 +56,29 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-12">
-            <div class="table-responsice bg-white">
-              <div class="form-button mt-3 col-second">
-                <a href="#" th:href="@{/products/create}"> <button id="submit" type="submit" class="btn btn-outline-dark">Add Product</button></a>
-              </div>
+            <div class="table-responsive bg-white">
               <table class="table mb-0">
+
                 <thead>
-                  <tr>
-                    <th scope="col"> Image</th>
-                    <th scope="col"> Products</th>
-                    <th scope="col"> Price</th>
-                    <th scope="col"> Discount</th>
-                    <th scope="col"> </th>
-
-                  </tr>
+                <tr>
+                  <th scope="col">  Order_id   </th>
+                  <th scope="col">  Buyer      </th>
+                  <th scope="col">  Products   </th>
+                  <th scope="col">  Cost       </th>
+                  <th scope="col">  Status     </th>
+                </tr>
                 </thead>
+
                 <tbody>
-                <tr th:each="product : ${allProducts}">
-                  <td><p>BOILERPLATE</p></td>
-                  <td th:text="${product.product_name}"></td>
-                  <td th:text="${product.price} + ' CZK'"></td>
 
-                  <td>
-                    <p th:if=${product.discount} th:text=" '- ' + ${product.discount} + ' %'"></p>
-                  </td>
-                  <td>
-                    <a href="#" th:href="@{'/products/edit?id=' + ${product.id}}"><button class="btn btn-secondary btn-circle btn-circle-sm m-1"><i class="bi-wrench"></i></button></a>
+                  <tr th:each="order : ${allOrders}">
 
-                  </td>
-                  <td>
-                    <form action="#" th:action="@{'products/delete?id=' + ${product.id}}" th:method="delete" >
-                      <input type="hidden" name="_method" value="delete" />
-                      <button type="submit" id="submitButton" class="btn btn-danger btn-circle btn-circle-sm m-1"><i class="bi bi-trash"></i> </button>
-                    </form>
-                  </td>
-                  <td>
-                    <form th:action="@{'/users/liked/' + ${product.id}}" method="post">
-                      <input type="hidden" name="_method" value="post"/>
-                      <button class="btn btn-warning btn-circle btn-circle-sm m-1" type="submit"><i class="bi-star"></i></button>
-                    </form>
-                  </td>
+                  <td th:text="${order.id}">                 </td>
+                  <td th:text="${order.buyer_id}">           </td>
+                  <td th:each="products : ${order.items_id}"> <p th:text="products"></p></td>
+                  <td th:text="${order.cost}"></td>
+                  <td th:text="${order.order_status}"></td>
+                  <td><a href="#" th:href="@{'/products/edit?id=' + ${product.id}}"><button class="btn btn-secondary btn-circle btn-circle-sm m-1"><i class="bi-wrench"></i></button></a></td>
 
                 </tbody>
               </table>

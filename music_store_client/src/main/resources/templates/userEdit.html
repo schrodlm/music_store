@@ -48,37 +48,41 @@
 <div class="container">
 <!-- form děla automaticky POST -->
 
-<form th:action="@{'/users/edit?usrname=' + ${user.username}}" method="post">
-  <input type="hidden" th:field="${user.id}">
-  <input type="hidden" th:field="${user.username}">
-  <input type="hidden" th:field="${user.role}">
-  <input type="hidden" th:field="${user.likedProducts}">
-
+<form th:action="@{'/users/edit?usrname=' + ${user.username}}" method="post" th:object="${user}">
+  <input type="hidden" th:field="*{id}">
+  <input type="hidden" th:field="*{username}">
+  <input type="hidden" th:field="*{role}">
+  <input type="hidden" th:field="*{likedProducts}">
+  <input type="hidden" th:field="*{password}">
 
   <div>
     <label for="firstName"> Name </label>
-    <input type="text" id="firstName" name="firstName" class="form-control" th:field="${user.name}">
+    <input type="text" id="firstName" name="firstName" class="form-control" th:field="*{name}">
+    <p th:errors = "*{name}" class="text-danger" th:if="${#fields.hasErrors('name')}"></p>
   </div>
   <div>
     <label for="surname"> Surname </label>
-    <input type="text" id="surname" name="surname" class="form-control" th:field="${user.surname}">
+    <input type="text" id="surname" name="surname" class="form-control" th:field="*{surname}">
+    <p th:errors = "*{surname}" class="text-danger" th:if="${#fields.hasErrors('surname')}"></p>
+
   </div>
   <div>
     <label for="address"> Address </label>
-    <input type="text" id="address" name="address" class="form-control" th:field="${user.address}">
+    <input type="text" id="address" name="address" class="form-control" th:field="*{address}">
+    <p th:errors = "*{address}" class="text-danger" th:if="${#fields.hasErrors('address')}"></p>
+
   </div>
   <div>
     <label for="credit_card"> Credit Card </label>
-    <input type="text" id="credit_card" name="credit_card" class="form-control" th:field="*{user.credit_card}">
+    <input type="text" id="credit_card" name="credit_card" class="form-control" th:field="*{credit_card}">
+    <p th:errors = "*{credit_card}" class="text-danger" th:if="${#fields.hasErrors('credit_card')}"></p>
+
   </div>
   <div>
     <label for="email"> Email </label>
-    <input type="text" id="email" name="email" class="form-control" th:field="${user.email}">
-  </div>
+    <input type="text" id="email" name="email" class="form-control" th:field="*{email}">
+    <p th:errors = "*{email}" class="text-danger" th:if="${#fields.hasErrors('email')}"></p>
 
-  <div>
-    <label for="password"> Password </label>
-    <input type="password" id="password" name="password" class="form-control" th:field="${user.password}">
   </div>
 
   <input type="submit" class="btn btn-primary">
