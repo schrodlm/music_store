@@ -39,5 +39,8 @@ public class OrderService {
         return orderClient.readUserOrders(userId);
     }
 
+    public OrderDto create(OrderDto orderDto){
+        return orderClient.create(orderDto);
+    }
 
 }

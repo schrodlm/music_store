@@ -2,6 +2,7 @@ package cz.cvut.tjv.music_store_client.client;
 
 import cz.cvut.tjv.music_store_client.dto.OrderDto;
 import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import org.glassfish.jersey.logging.LoggingFeature;
@@ -58,5 +59,12 @@ public class OrderClient {
         var response = activeOrderEndpoint
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .delete();
+    }
+
+    public OrderDto create(OrderDto orderDto)
+    {
+        return orderEndpoint
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .post(Entity.entity(orderDto, MediaType.APPLICATION_JSON_TYPE), OrderDto.class);
     }
 }

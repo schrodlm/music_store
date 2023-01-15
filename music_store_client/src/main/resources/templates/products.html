@@ -6,6 +6,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Products - Music Store</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
 </head>
 <body>
 
@@ -57,6 +60,18 @@
     <div class="alert alert-warning">Product is already in your favourites! </div>
   </div>
 
+<div class="container" th:if="${emptyCart}">
+  <div class="alert alert-warning">Shopping cart is empty</div>
+</div>
+
+<div class="container" th:if="${createOrderSuccess}">
+  <div class="alert alert-success">Order was created! You can check status in My Orders tab!</div>
+</div>
+
+<div th:if="${addedToCartTrue}" class="alert alert-success container">
+  <span th:text="' ' + ${addedToCart} + ' was added to your cart!'"> </span>
+</div>
+
 <section class="intro">
   <div class="gradient-custom-1 h-100">
     <div class="mask d-flex align-items-center h-10">
@@ -104,8 +119,21 @@
                     </form>
                   </td>
 
+                  <td>
+                    <form th:action="@{'/orders/add/'+ ${product.id}}" method="post">
+                      <input type="hidden" name="_method" value="post"/>
+                      <button class="btn btn-warning btn-circle btn-circle-sm m-1" type="submit"><i class="bi bi-bag-plus"></i></button>
+                    </form>
+                  </td>
+
                 </tbody>
               </table>
+
+              <form th:action="@{'/orders/create'}" method="post">
+                <input type="hidden" name="_method" value="post"/>
+                <button class="btn btn-warning btn-circle btn-circle-sm m-1" type="submit">Create order </button>
+              </form>
+
             </div>
           </div>
         </div>
@@ -113,7 +141,10 @@
     </div>
   </div>
 
+
+
 </section>
 
 </body>
+
 </html>

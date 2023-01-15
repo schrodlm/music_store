@@ -8,8 +8,10 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,7 +19,10 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Controller
 @RequestMapping("/products")
@@ -32,10 +37,12 @@ public class ProductController {
         this.productService = productService;
     }
 
+
     @GetMapping
     public String products(Model model)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
 
         model.addAttribute("loggedUser", authentication.getName());
         model.addAttribute("allProducts", productService.readAll());

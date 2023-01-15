@@ -74,7 +74,7 @@
                 <tr th:each="order : ${allOrders}">
 
                   <td><div th:each="oneProduct : ${order.items_id}"><p th:text="${oneProduct}"></p></div></td>
-                  <td th:text="${order.cost}"></td>
+                  <td th:text="${order.cost} + ' Kč'"></td>
                   <td th:text="${order.order_status}"></td>
                   <td th:text="${#temporals.format(order.date_of_order)}"></td>
 
