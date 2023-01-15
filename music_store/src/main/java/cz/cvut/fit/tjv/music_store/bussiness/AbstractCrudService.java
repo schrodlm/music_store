@@ -4,6 +4,8 @@ import cz.cvut.fit.tjv.music_store.domain.DomainEntity;
 import cz.cvut.fit.tjv.music_store.exceptions.EntityStateException;
 import cz.cvut.fit.tjv.music_store.exceptions.InvalidStateException;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -26,7 +28,7 @@ public class AbstractCrudService<E extends DomainEntity<K>, K> {
      */
     public E create(E entity) throws EntityStateException {
        if(repository.existsById(entity.getId()))
-           throw new EntityStateException(entity);
+           throw new  ResponseStatusException(HttpStatus.NOT_FOUND);
        return repository.save(entity);
     }
 

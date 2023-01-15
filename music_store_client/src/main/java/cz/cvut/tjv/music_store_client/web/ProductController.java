@@ -8,6 +8,7 @@ import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +35,9 @@ public class ProductController {
     @GetMapping
     public String products(Model model)
     {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        model.addAttribute("loggedUser", authentication.getName());
         model.addAttribute("allProducts", productService.readAll());
         return "products";
     }
@@ -45,6 +49,10 @@ public class ProductController {
     @GetMapping("/edit")
     public String editProduct(@RequestParam long id, Model model)
     {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        model.addAttribute("loggedUser", authentication.getName());
+
         productService.setActiveProduct(id);
         model.addAttribute("product",productService.readOne().orElseThrow());
         return "productEdit";
@@ -85,6 +93,9 @@ public class ProductController {
     public String createProduct(Model model)
     {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        model.addAttribute("loggedUser", authentication.getName());
         model.addAttribute("product", new ProductDto());
         return "productCreate";
     }
@@ -131,9 +142,12 @@ public class ProductController {
     @GetMapping("/liked")
     public String showLikedProducts(Model model)
     {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-            model.addAttribute("likedProducts", productService.readAllFavourites());
-            return "likedProducts";
+        model.addAttribute("loggedUser", authentication.getName());
+
+        model.addAttribute("likedProducts", productService.readAllFavourites());
+        return "likedProducts";
 
     }
 

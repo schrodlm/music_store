@@ -6,6 +6,7 @@ import cz.cvut.tjv.music_store_client.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,9 @@ public class UserController {
 
     @GetMapping
     public String users(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        model.addAttribute("loggedUser", authentication.getName());
         model.addAttribute("allUsers", userService.readAll());
         return "users";
     }
@@ -39,6 +43,10 @@ public class UserController {
     @GetMapping("/register")
     public String showRegistrationForm(Model model){
         // create model object to store form data
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        model.addAttribute("loggedUser", authentication.getName());
         model.addAttribute("user", new UserDto());
         return "userRegister";
     }
@@ -50,12 +58,14 @@ public class UserController {
     public String registration(@Valid @ModelAttribute("user") UserDto userDto,
                                BindingResult result,
                                Model model){
-        if(userService.findByUsername(userDto.getUsername()) == null)
-            result.rejectValue("username", null, "THis username is already registered");
+        if(userService.findByUsername(userDto.getUsername()).isPresent()) {
+            model.addAttribute("usernameExists", true);
+            return "userRegister";
+        }
 
         if(result.hasErrors()){
             model.addAttribute("user", userDto);
-            return "redirect:/index";
+            return "redirect:/users/register";
         }
         userDto.setRole("USER");
         userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
@@ -68,6 +78,10 @@ public class UserController {
     @GetMapping("/edit")
     public String editUser(@RequestParam String usrname, Model model)
     {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        model.addAttribute("loggedUser", authentication.getName());
+
         userService.setActiveUser(usrname);
         model.addAttribute("user", userService.readOne().orElseThrow());
         return "userEdit";
