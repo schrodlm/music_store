@@ -1,6 +1,8 @@
 package cz.cvut.tjv.music_store_client.dto;
 
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -12,6 +14,7 @@ public class OrderDto {
     private String invoice;
     private Integer cost;
     private String order_status;
+    @DateTimeFormat(pattern = "dd.MM.yyyy. HH:mm a")
     private LocalDateTime date_of_order = LocalDateTime.now();
 
     public int getId() {

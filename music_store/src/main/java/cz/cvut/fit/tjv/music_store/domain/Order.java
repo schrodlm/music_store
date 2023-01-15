@@ -1,5 +1,7 @@
 package cz.cvut.fit.tjv.music_store.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -21,57 +23,37 @@ public class Order implements  DomainEntity<Integer> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "invoice")
-    private String invoice;
     @Column(name = "cost")
     @Min(10)
     @Max(1000000)
     private Integer cost;
-    private String order_status;
+    private String status;
     @Column(name = "date_of_order")
-    private LocalDateTime date_of_order = LocalDateTime.now();
+    @DateTimeFormat(pattern = "dd.MM.yyyy. HH:mm a")
+    private LocalDateTime date = LocalDateTime.now();
 
 
     /*
         Relations
      */
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    private StoreUser Buyer;
-    @ManyToMany(cascade =  CascadeType.REMOVE)
-    private Collection<Product> Bought_Items;
+    @ManyToOne
+    private StoreUser buyer;
+    @ManyToMany
+    private Collection<Product> boughtItems;
 
     /*
         Constructor
     */
-    public Order(int id, StoreUser buyer, ArrayList<Product> bought_Items, String invoice, Integer cost, String order_status, LocalDateTime date_of_order) {
+    public Order(int id, StoreUser buyer, ArrayList<Product> boughtItems, Integer cost, String order_status, LocalDateTime date_of_order) {
         this.id = id;
-        Buyer = buyer;
-        Bought_Items = bought_Items;
-        this.invoice = invoice;
+        this.buyer = buyer;
+        this.boughtItems = boughtItems;
         this.cost = cost;
-        this.order_status = order_status;
-        this.date_of_order = date_of_order;
+        this.status = order_status;
+        this.date = date_of_order;
     }
 
     public Order(){};
-
-    /*
-        Getters
-     */
-    @Override
-    public Integer getId() {return this.id;}
-
-    public StoreUser getBuyer() {return Buyer;}
-
-    public Collection<Product> getBought_Items() {return Bought_Items;}
-
-    public String getInvoice() {return invoice;}
-
-    public Integer getCost() {return cost;}
-
-    public String getOrder_status() {return order_status;}
-
-    public LocalDateTime getDate_of_order() {return date_of_order;}
 
 
     /*
@@ -80,15 +62,52 @@ public class Order implements  DomainEntity<Integer> {
     @Override
     public void setId(Integer id_order) {this.id = id_order;}
 
-    public void setBuyer(StoreUser buyer) {Buyer = buyer;}
+    @Override
+    public Integer getId() {
+        return id;
+    }
 
-    public void setBought_Items(Collection <Product> bought_Items) {Bought_Items = bought_Items;}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public void setInvoice(String invoice) {this.invoice = invoice;}
+    public Integer getCost() {
+        return cost;
+    }
 
-    public void setCost(Integer cost) {this.cost = cost;}
+    public void setCost(Integer cost) {
+        this.cost = cost;
+    }
 
-    public void setOrder_status(String order_status) {this.order_status = order_status;}
+    public String getStatus() {
+        return status;
+    }
 
-    public void setDate_of_order(LocalDateTime date_of_order) {this.date_of_order = date_of_order;}
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    public StoreUser getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(StoreUser buyer) {
+        this.buyer = buyer;
+    }
+
+    public Collection<Product> getBoughtItems() {
+        return boughtItems;
+    }
+
+    public void setBoughtItems(Collection<Product> boughtItems) {
+        this.boughtItems = boughtItems;
+    }
 }

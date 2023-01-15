@@ -37,10 +37,10 @@ public class Product implements DomainEntity<Integer> {
         Relations
      */
 
-    @ManyToMany(mappedBy = "Bought_Items", cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "boughtItems")
     private Collection<Order> inOrders;
 
-    @ManyToMany(mappedBy = "likedProducts",  cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "likedProducts")
     private Collection<StoreUser> likedBy;
 
 

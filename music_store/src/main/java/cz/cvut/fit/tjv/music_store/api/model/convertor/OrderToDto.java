@@ -20,15 +20,14 @@ public class OrderToDto implements Function<Order, OrderDto> {
 
         //setting Array of item ids
         ArrayList<Integer> ids = new ArrayList<>();
-        for(Product p : order.getBought_Items())
+        for(Product p : order.getBoughtItems())
         {
             ids.add(p.getId());
         }
         ret.setItems_id(ids);
-        ret.setInvoice(order.getInvoice());
         ret.setCost(order.getCost());
-        ret.setOrder_status(order.getOrder_status());
-        ret.setDate_of_order(order.getDate_of_order());
+        ret.setOrder_status(order.getStatus());
+        ret.setDate_of_order(order.getDate());
 
         return ret;
     }

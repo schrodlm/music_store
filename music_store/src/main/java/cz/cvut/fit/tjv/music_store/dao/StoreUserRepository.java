@@ -1,5 +1,6 @@
 package cz.cvut.fit.tjv.music_store.dao;
 
+import cz.cvut.fit.tjv.music_store.domain.Order;
 import cz.cvut.fit.tjv.music_store.domain.Product;
 import cz.cvut.fit.tjv.music_store.domain.StoreUser;
 import org.springframework.data.jpa.repository.Query;

@@ -43,7 +43,6 @@ public class OrderToEntity implements Function<OrderDto, Order> {
                 orderDto.getId(),
                 userService.readById(orderDto.getBuyer_id()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Author username does not exist")),
                 p,
-                orderDto.getInvoice(),
                 orderDto.getCost(),
                 orderDto.getOrder_status(),
                 orderDto.getDate_of_order()

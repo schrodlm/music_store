@@ -61,8 +61,6 @@
 
                 <thead>
                 <tr>
-                  <th scope="col">  Order_id      </th>
-                  <th scope="col">  Buyer         </th>
                   <th scope="col">  Products      </th>
                   <th scope="col">  Cost          </th>
                   <th scope="col">  Status        </th>
@@ -73,21 +71,12 @@
 
                 <tbody>
 
-                  <tr th:each="order : ${allOrders}">
+                <tr th:each="order : ${allOrders}">
 
-                  <td th:text="${order.id}">                 </td>
-                  <td th:text="${order.buyer_id}">           </td>
                   <td><div th:each="oneProduct : ${order.items_id}"><p th:text="${oneProduct}"></p></div></td>
                   <td th:text="${order.cost}"></td>
                   <td th:text="${order.order_status}"></td>
                   <td th:text="${#temporals.format(order.date_of_order)}"></td>
-                  <td><a href="#" th:href="@{'/orders/edit?id=' + ${order.id}}"><button class="btn btn-secondary btn-circle btn-circle-sm m-1"><i class="bi-wrench"></i></button></a></td>
-                    <td>
-                      <form action="#" th:action="@{'orders/delete/' + ${order.id}}" th:method="delete" >
-                        <input type="hidden" name="_method" value="delete" />
-                        <button type="submit" id="submitButton" class="btn btn-success btn-circle btn-circle-sm m-1"><i class="bi bi-check-lg"></i> </button>
-                      </form>
-                    </td>
 
                 </tbody>
               </table>

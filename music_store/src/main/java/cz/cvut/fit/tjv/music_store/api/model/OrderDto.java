@@ -1,5 +1,7 @@
 package cz.cvut.fit.tjv.music_store.api.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -8,9 +10,9 @@ public class OrderDto {
     private int id;
     private int buyer_id;
     private ArrayList<Integer> items_id;
-    private String invoice;
     private Integer cost;
     private String order_status;
+    @DateTimeFormat(pattern = "dd.MM.yyyy. HH:mm a")
     private LocalDateTime date_of_order = LocalDateTime.now();
 
     public int getId() {
@@ -35,14 +37,6 @@ public class OrderDto {
 
     public void setItems_id(ArrayList<Integer> items_id) {
         this.items_id = items_id;
-    }
-
-    public String getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(String invoice) {
-        this.invoice = invoice;
     }
 
     public Integer getCost() {
