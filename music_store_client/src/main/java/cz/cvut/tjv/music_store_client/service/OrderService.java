@@ -43,4 +43,8 @@ public class OrderService {
         return orderClient.create(orderDto);
     }
 
+    public void update(OrderDto orderDto)
+    {
+        orderClient.updateOne(orderDto);
+    }
 }

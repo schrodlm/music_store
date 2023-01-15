@@ -43,8 +43,6 @@
 
 
 
-
-
 <div class="container">
     <h1> Order </h1>
     <div th:if="${error}" class="alert alert-danger">
@@ -52,19 +50,31 @@
     </div>
 
 
-    <form th:action="@{'/order/edit?id=' + ${order.id}}" method="post" th:object="${order}">
 
-        <div class="form-group row">
-            <select class="form-control" id="status" name="status">
-                <option th:each="stat : ${statuses}"
-                        th:value="${stat}"
-                        th:text="${stat}"
-                        th:selected="${stat.equals(group.status)}"/>
-            </select>
-        </div>
 
-        <input type="submit" class="btn btn-primary">
-        <input type="reset" class="btn btn-secondary">
+    <form th:action="@{'/orders/edit?id=' + ${order.id}}" method="post" th:object="${order}">
+
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{buyer_id}">
+        <input type="hidden" th:field="*{date_of_order}">
+        <input type="hidden" th:field="*{items_id}">
+        <input type="hidden" th:field="*{cost}">
+
+        <div class="form-group container">
+                <label for="select-example">Select an option:</label>
+                <select class="form-control" id="select-example" name="select-example" th:field="${order.order_status}">
+                    <option th:each="option : ${statuses}"
+                            th:value="${option}"
+                            th:text="${option}">
+                    </option>
+                </select>
+            </div>
+
+            <input type="submit" class="btn btn-primary">
+
+        </form>
+
+
     </form>
 </div>
 

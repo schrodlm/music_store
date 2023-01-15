@@ -49,6 +49,9 @@
   <strong> Success! </strong><span th:text="${deleteMessage}"> </span>
 </div>
 
+<div th:if="${changeStatus}" class="alert alert-success container">
+  <span th:text="${changeStatusMsg}"> </span>
+</div>
 
 <section class="intro">
   <div class="gradient-custom-1 h-100">

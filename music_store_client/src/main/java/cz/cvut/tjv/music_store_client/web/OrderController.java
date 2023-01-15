@@ -111,7 +111,7 @@ public class OrderController {
 
         order.setBuyer_id(userId);
         order.setDate_of_order(LocalDateTime.now());
-        order.setOrder_status("Preparing");
+        order.setOrder_status("Waiting");
         order.setCost(allCost);
         order.setItems_id(shoppingCart);
 
@@ -151,12 +151,26 @@ public class OrderController {
 
         List<String> statuses = Arrays.asList("Preparing", "Shipped", "Waiting", "Arrived");
 
-        model.addAttribute("statues",statuses);
 
         orderService.setActiveOrder(id);
         model.addAttribute("order",orderService.readOne().orElseThrow());
+        model.addAttribute("statuses",statuses);
+        model.addAttribute("selectedOption", orderService.readOne().orElseThrow().getOrder_status());
 
         return "orderEdit";
     }
 
+    @PostMapping("/edit")
+    public String updateStatus(@ModelAttribute("order") OrderDto order, RedirectAttributes redirectAttributes)
+    {
+        orderService.setActiveOrder(order.getId());
+        orderService.update(order);
+
+        String changeStatusMsg = "Order " + order.getId() +  " status was sucessfuly changed to " + order.getOrder_status();
+
+        redirectAttributes.addFlashAttribute("changeStatus", true);
+        redirectAttributes.addFlashAttribute("changeStatusMsg", changeStatusMsg);
+
+        return "redirect:/orders";
+    }
 }
