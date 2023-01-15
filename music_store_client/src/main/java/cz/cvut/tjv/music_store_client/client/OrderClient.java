@@ -78,4 +78,10 @@ public class OrderClient {
         if(response.getStatus() > 200)
             throw new BadRequestException(response.getStatusInfo().getReasonPhrase());
     }
+
+    public Collection<OrderDto> readImportantOrders()
+    {
+        return Arrays.asList(orderEndpoint.path("/important").request(MediaType.APPLICATION_JSON_TYPE).get(OrderDto[].class));
+
+    }
 }

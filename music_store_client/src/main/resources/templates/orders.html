@@ -39,7 +39,6 @@
     <div class="navbar-right" style="float: right;">
       <a class="nav-link" href="/logout"><button class="btn btn-light btn-circle btn-circle-sm m-1">Logout   <i class="bi bi-box-arrow-right"></i></button></a>
     </div>
-
   </div>
 </nav>
 
@@ -60,6 +59,9 @@
         <div class="row justify-content-center">
           <div class="col-12">
             <div class="table-responsive bg-white">
+              <div class="form-button mt-3 col-second">
+                <a href="#" th:href="@{/orders/important}"> <button id="submit" type="submit" class="btn btn-outline-dark">Important orders</button></a>
+              </div>
               <table class="table mb-0">
 
                 <thead>

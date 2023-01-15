@@ -6,6 +6,7 @@ import cz.cvut.tjv.music_store_client.service.OrderService;
 import cz.cvut.tjv.music_store_client.service.ProductService;
 import cz.cvut.tjv.music_store_client.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -14,11 +15,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.PublicKey;
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/orders")
@@ -172,5 +171,48 @@ public class OrderController {
         redirectAttributes.addFlashAttribute("changeStatusMsg", changeStatusMsg);
 
         return "redirect:/orders";
+    }
+
+    @GetMapping("/important")
+    public String showImportantOrders(Model model)
+    {
+
+
+        Collection<OrderDto> veryImportant = new ArrayList<>();
+        Collection<OrderDto> important = new ArrayList<>();
+        Collection<OrderDto> notImportant = new ArrayList<>();
+
+        for(OrderDto order : orderService.readImportantOrders())
+        {
+            order.getDate_of_order().getMonth();
+            LocalDateTime now = LocalDateTime.now();
+            LocalDateTime orderDate = order.getDate_of_order();
+
+            Duration duration = Duration.between(orderDate,now);
+
+            if(duration.toMinutes() > 7)
+            {
+                if(order.getOrder_status().equals("Waiting"))
+                    veryImportant.add(order);
+                else {
+                    important.add(order);
+                }
+            }
+
+            else if(duration.toMinutes() > 4)
+            {
+                if(order.getOrder_status().equals("Waiting"))
+                    important.add(order);
+                else
+                    notImportant.add(order);
+            }
+            else notImportant.add(order);
+        }
+
+        model.addAttribute("veryImportant", veryImportant);
+        model.addAttribute("important", important);
+        model.addAttribute("notImportant", notImportant);
+
+        return "importantOrders";
     }
 }
