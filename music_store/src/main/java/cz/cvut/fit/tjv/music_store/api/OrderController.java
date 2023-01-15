@@ -56,4 +56,15 @@ public class OrderController extends AbstractCrudController<Order, OrderDto, Int
         return orders;
 
     }
+    @GetMapping("/important")
+    public Collection<OrderDto> findByStatusInWaitingOrPreparing(){
+
+        Collection<OrderDto> ret = new ArrayList<>();
+        for(Order order : service.findByStatusInWaitingOrPreparing())
+        {
+            ret.add(toDto.apply(order));
+        }
+
+        return ret;
+    }
 }

@@ -20,5 +20,5 @@ public class OrderService extends AbstractCrudService<Order,Integer>{
 
 
     public Collection<Order> findOrdersByUser (StoreUser user) {return orderRepository.findOrdersByBuyer(user);}
-
+    public Collection<Order> findByStatusInWaitingOrPreparing(){return orderRepository.findByStatusInWaitingOrPreparing();}
 }
