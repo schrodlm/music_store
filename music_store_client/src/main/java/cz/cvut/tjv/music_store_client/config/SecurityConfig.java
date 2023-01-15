@@ -54,7 +54,7 @@ public class SecurityConfig{
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers(new AntPathRequestMatcher("/users/register/**")).permitAll()
-                                .requestMatchers(new AntPathRequestMatcher("/products/edit")).hasRole("ADMIN")
+                                //.requestMatchers(new AntPathRequestMatcher("/products/edit")).hasRole("ADMIN")
                                 .anyRequest().authenticated()
                 ).formLogin(
                         form -> form

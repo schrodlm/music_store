@@ -40,7 +40,7 @@
 </nav>
 
 
-<h1> Product Edit </h1>
+<h1> User Edit </h1>
 <div th:if="${error}" class="alert alert-danger">
   <span th:text="${errorMsg}"> </span>
 </div>
@@ -52,6 +52,7 @@
   <input type="hidden" th:field="${user.id}">
   <input type="hidden" th:field="${user.username}">
   <input type="hidden" th:field="${user.role}">
+  <input type="hidden" th:field="${user.likedProducts}">
 
 
   <div>

@@ -40,26 +40,34 @@
   </div>
 </nav>
 
-
+<div class="container">
   <h1> Product Edit </h1>
   <div th:if="${error}" class="alert alert-danger">
-      <span th:text="${errorMsg}"> </span>
+    <span th:text="${errorMsg}"> </span>
   </div>
   <!-- form děla automaticky POST -->
   <form th:action="@{'/products/edit?id=' + ${product.id}}" method="post" th:object="${product}">
     <input type="hidden" th:field="*{id}">
     <div>
       <label for="product_name"> Name of the product </label>
-      <input type="text" id="product_name" name="product_name" class="form-control" th:placeholder="*{product_name}">
+      <input type="text" id="product_name" name="product_name" class="form-control" th:field="*{product_name}">
+      <p th:errors = "*{product_name}" class="text-danger" th:if="${#fields.hasErrors('product_name')}"></p>
     </div>
     <div>
-      <label for="price"> Author </label>
-      <input type="text" id="price" name="price" class="form-control" th:placeholder="*{price}">
-      <p th:if="${#fields.hasErrors('price')}" th:errorclass="error" th:errors="*{price}"/>
+      <label for="price"> Price </label>
+      <input type="text" id="price" name="price" class="form-control" th:field="*{price}">
+      <p th:if="${#fields.hasErrors('price')}" class="text-danger" th:errorclass="error" th:errors="*{price}"/>
     </div>
+
+    <div>
+      <label for="price"> Discount (%) </label>
+      <input type="text" id="discount" name="discount" class="form-control" th:field="*{discount}">
+      <p th:if="${#fields.hasErrors('discount')}" class="text-danger" th:errorclass="error" th:errors="*{discount}"/>
+    </div>
+
     <input type="submit" class="btn btn-primary">
     <input type="reset" class="btn btn-secondary">
-  </div>
   </form>
+</div>
 </body>
 </html>

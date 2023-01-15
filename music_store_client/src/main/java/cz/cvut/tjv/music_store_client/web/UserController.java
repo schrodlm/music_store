@@ -65,7 +65,7 @@ public class UserController {
 
         if(result.hasErrors()){
             model.addAttribute("user", userDto);
-            return "redirect:/users/register";
+            return "userRegister";
         }
         userDto.setRole("USER");
         userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
@@ -88,7 +88,7 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String submitEditUser(@ModelAttribute UserDto userDto, BindingResult bindingResult, Model model)
+    public String submitEditUser(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, Model model)
     {
         if(bindingResult.hasErrors())
         {

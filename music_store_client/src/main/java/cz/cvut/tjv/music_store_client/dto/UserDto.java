@@ -1,17 +1,33 @@
 package cz.cvut.tjv.music_store_client.dto;
 
+import jakarta.validation.constraints.*;
+
 import java.util.Collection;
 
 public class UserDto {
 
+    //id is not set anywhere, it doesn't need any constraints
+
     private int id;
+
+    //username is set only once -> in registration form
+    @Size(min=5, max=255)
+    @NotBlank
     private String username;
+
+    @NotBlank
+    @Pattern(regexp = "^[A-Z][a-zA-Z]*$")
     private String name;
+    @Pattern(regexp = "^[A-Z][a-zA-Z]*$")
     private String surname;
 
+    @Size(min=5, max=255)
+    @NotBlank
     private String password;
 
+    @Pattern(regexp = "^(ADMIN|USER)$")
     private String role;
+
     private String address;
     private String email;
     private String credit_card;
