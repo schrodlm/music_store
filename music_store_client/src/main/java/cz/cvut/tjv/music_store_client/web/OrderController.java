@@ -33,9 +33,12 @@ public class OrderController {
     @GetMapping
     public String showAllOrders(Model model)
     {
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         model.addAttribute("loggedUser", authentication.getName());
+
+
 
 
         model.addAttribute("allOrders", orderService.readAll());

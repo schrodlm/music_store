@@ -44,18 +44,27 @@ public class SecurityConfig{
     private CustomUserDetailService customUserDetailService;
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
+    @Autowired
+    private CustomAccessDeniedHandler accessDeniedHandler;
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
 
+
         http.csrf().disable()
                 .authorizeHttpRequests((authorize) ->
                         authorize.requestMatchers(new AntPathRequestMatcher("/users/register/**")).permitAll()
-                                //.requestMatchers(new AntPathRequestMatcher("/products/edit")).hasRole("ADMIN")
+                                .requestMatchers(new AntPathRequestMatcher("/products/liked/**")).authenticated()
+                                .requestMatchers(new AntPathRequestMatcher("/products")).permitAll()
+                                .requestMatchers(new AntPathRequestMatcher("/products/**")).hasAuthority("ADMIN")
+                                .requestMatchers(new AntPathRequestMatcher("/orders/user/**")).authenticated()
+                                .requestMatchers(new AntPathRequestMatcher("/orders/**")).hasAuthority("ADMIN")
+                                .requestMatchers(new AntPathRequestMatcher("/users/edit")).authenticated()
+                                .requestMatchers(new AntPathRequestMatcher("/users/**")).hasAuthority("ADMIN")
                                 .anyRequest().authenticated()
+
                 ).formLogin(
                         form -> form
                                 .loginPage("/login")
@@ -66,7 +75,10 @@ public class SecurityConfig{
                         logout -> logout
                                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                                 .permitAll()
-                );
+                )
+                .exceptionHandling()
+                .accessDeniedHandler(accessDeniedHandler)
+        ;
         return http.build();
 
     }

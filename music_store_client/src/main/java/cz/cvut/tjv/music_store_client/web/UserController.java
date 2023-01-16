@@ -80,9 +80,19 @@ public class UserController {
     @GetMapping("/edit")
     public String editUser(@RequestParam String usrname, Model model)
     {
+
+
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         model.addAttribute("loggedUser", authentication.getName());
+
+        //user trying to access this page is not admin and is trying to access different account
+        if(!userService.findByUsername(authentication.getName()).orElseThrow().getRole().equals("ADMIN") && !authentication.getName().equals(usrname))
+        {
+            return "redirect:/";
+        }
+
 
         userService.setActiveUser(usrname);
         model.addAttribute("user", userService.readOne().orElseThrow());
@@ -90,7 +100,7 @@ public class UserController {
     }
 
     @PostMapping("/edit")
-    public String submitEditUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult, Model model)
+    public String submitEditUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes)
     {
         if(bindingResult.hasErrors())
         {
@@ -104,12 +114,20 @@ public class UserController {
         }
         catch (BadRequestException e)
         {
-            model.addAttribute("error",true);
-            model.addAttribute("errorMsg", e.getMessage());
+            redirectAttributes.addFlashAttribute("error",true);
+            redirectAttributes.addFlashAttribute("errorMsg", e.getMessage());
         }
 
         model.addAttribute("user", userDto);
-        return "redirect:/users";
+
+        redirectAttributes.addFlashAttribute("changedUserTrue", true);
+        redirectAttributes.addFlashAttribute("changedUserMsg", "User details were successfully changed!");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(userService.findByUsername(authentication.getName()).orElseThrow().getRole().equals("ADMIN"))
+            return "redirect:/users";
+        else
+            return "redirect:/";
     }
 
     @DeleteMapping("/delete")
@@ -137,7 +155,7 @@ public class UserController {
     }
 
     @PostMapping("/liked/{id}")
-    public String submitEditUser(@PathVariable("id") Integer productId,  Model model, RedirectAttributes redirectAttributes)
+    public String addLike(@PathVariable("id") Integer productId,  Model model, RedirectAttributes redirectAttributes)
     {
 
 

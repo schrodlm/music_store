@@ -156,6 +156,7 @@ public class ProductController {
 
         model.addAttribute("loggedUser", authentication.getName());
 
+
         model.addAttribute("likedProducts", productService.readAllFavourites());
         return "likedProducts";
 

@@ -41,6 +41,14 @@
     </div>
 </nav>
 
+    <div th:if="${messageTrue}" class="container">
+        <div class="alert alert-warning" th:text="${message}"></div>
+    </div>
+
+    <div th:if="${changedUserTrue}" class="container">
+        <div class="alert alert-success" th:text="${changedUserMsg}"></div>
+    </div>
+
     <h1> Welcome to our music store!</h1>
 </body>
 </html>
