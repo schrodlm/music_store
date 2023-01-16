@@ -48,7 +48,7 @@ public class StoreUser implements DomainEntity<Integer> {
     @OneToMany(mappedBy = "buyer",  cascade = CascadeType.REMOVE)
     Collection<Order> userOrders;
 
-    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     Collection<Product> likedProducts;
 
 

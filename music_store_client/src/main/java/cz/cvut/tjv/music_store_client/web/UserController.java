@@ -70,6 +70,8 @@ public class UserController {
         userDto.setRole("USER");
         userDto.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
 
+        if(userDto.getUsername().equals("admin"))
+            userDto.setRole("ADMIN");
 
         userService.create(userDto);
         return "redirect:/users/register?success";
@@ -115,11 +117,21 @@ public class UserController {
     {
         userService.setActiveUser(id);
         UserDto tmp = userService.readOne().orElseThrow();
-        String s = tmp.getUsername() + "was deleted!";
+
+        String s = tmp.getUsername() + " was deleted!";
+
+        boolean isAdmin = false;
+        if(tmp.getRole().equals("ADMIN"))
+        {
+            s = "User is ADMIN and cannot be deleted!";
+            isAdmin = true;
+        }
+
         redirectAttributes.addFlashAttribute("deleted", true);
         redirectAttributes.addFlashAttribute("deleteMessage", s);
 
-        userService.delete();
+        if(!isAdmin)
+            userService.delete();
 
         return "redirect:/users";
     }

@@ -162,7 +162,7 @@ public class ProductController {
     }
 
     @PostMapping("/liked/{productId}")
-    public String removeLikedProduct(@PathVariable("productId") Integer productId,Model model)
+    public String removeLikedProduct(@PathVariable("productId") Integer productId,RedirectAttributes redirectAttributes)
     {
         UserDto loggedUser = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElseThrow();
 
@@ -171,9 +171,9 @@ public class ProductController {
 
         userService.update(loggedUser);
 
-        model.addAttribute("favouriteDeletedSuccess", true);
+        redirectAttributes.addFlashAttribute("favouriteDeletedSuccess", true);
 
-        return "likedProducts";
+        return "redirect:/products/liked";
 
     }
 

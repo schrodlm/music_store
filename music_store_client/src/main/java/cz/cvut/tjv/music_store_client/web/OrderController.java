@@ -176,7 +176,9 @@ public class OrderController {
     @GetMapping("/important")
     public String showImportantOrders(Model model)
     {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        model.addAttribute("loggedUser", authentication.getName());
 
         Collection<OrderDto> veryImportant = new ArrayList<>();
         Collection<OrderDto> important = new ArrayList<>();
