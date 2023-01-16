@@ -20,7 +20,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Collection;
 import java.util.function.Function;
 import java.util.stream.StreamSupport;
-
 public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
 
     protected AbstractCrudService<E,ID> service;

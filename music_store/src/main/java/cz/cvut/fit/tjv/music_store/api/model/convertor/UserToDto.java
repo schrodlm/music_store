@@ -20,6 +20,7 @@ public class UserToDto implements Function<StoreUser,StoreUserDto> {
             for (var product : user.getLikedProducts()) {
                 tmp.add(product.getId());
             }
+
         }
         StoreUserDto ret = new StoreUserDto();
 

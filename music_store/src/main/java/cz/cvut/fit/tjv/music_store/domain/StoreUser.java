@@ -10,6 +10,7 @@ import cz.cvut.fit.tjv.music_store.api.ProductController;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -47,7 +48,7 @@ public class StoreUser implements DomainEntity<Integer> {
     @OneToMany(mappedBy = "buyer",  cascade = CascadeType.REMOVE)
     Collection<Order> userOrders;
 
-    @ManyToMany(cascade = CascadeType.REMOVE)
+    @ManyToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     Collection<Product> likedProducts;
 
 
@@ -125,5 +126,21 @@ public class StoreUser implements DomainEntity<Integer> {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StoreUser storeUser = (StoreUser) o;
+        return id == storeUser.id &&
+                Objects.equals(username, storeUser.username) &&
+                Objects.equals(name, storeUser.name) &&
+                Objects.equals(surname, storeUser.surname) &&
+                Objects.equals(address, storeUser.address) &&
+                Objects.equals(email, storeUser.email) &&
+                Objects.equals(credit_card, storeUser.credit_card) &&
+                Objects.equals(password, storeUser.password) &&
+                Objects.equals(role, storeUser.role);
     }
 }

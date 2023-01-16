@@ -1,6 +1,11 @@
 
+// These test are using testing database running on port 5433
+
+//==============================
+//GET TESTS
+//==============================
 ### Reading all users TEST
-GET http://localhost:8080/users
+GET http://{{host}}/users
 
 > {%
 client.test("Request executed successfully", function() {
@@ -9,11 +14,32 @@ client.test("Request executed successfully", function() {
 %}
 
 ### Reading one user TEST
-GET http://localhost:8080/users/1
+GET http://{{host}}/users/1
 
 > {%
 client.test("Request executed successfully", function() {
   client.assert(response.status === 200, "Response status is not 200");
 });
 %}
+
+### Reading one user by username TEST
+GET http://{{host}}/users/username/{{username}}
+//username does not exist so it should not return 200
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 500, "Response status is not 500");
+});
+%}
+
+### Read all product TEST
+
+GET http://{{host}}/products
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
 

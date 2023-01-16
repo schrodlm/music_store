@@ -28,3 +28,8 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+test {
+	systemProperties = System.getProperties()
+	systemProperties['spring.config.name'] = 'application-test'
+	systemProperties['spring.config.location'] = 'file:src/test/resources/'
+}
