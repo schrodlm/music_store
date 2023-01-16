@@ -16,7 +16,6 @@ import io.swagger.annotations.ApiModelProperty;
 public class ProductDto {
 
     @ApiModelProperty(value = "Identification of the product")
-    @JsonIgnore
     private int id;
     @ApiModelProperty(value = "Name of the products", example = "Karel Kril LP Vinyl")
     private String product_name;

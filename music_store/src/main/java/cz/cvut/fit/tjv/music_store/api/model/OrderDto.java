@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class OrderDto {
 
     @ApiModelProperty(value = "Identification of the order, it is generated automatically", required = false)
-    @JsonIgnore
     private int id;
 
     @ApiModelProperty(value = "Identification of the user that created that order", example = "1")

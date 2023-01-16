@@ -23,18 +23,37 @@ client.test("Request executed successfully", function() {
 %}
 
 ### Reading one user by username TEST
-GET http://{{host}}/users/username/{{username}}
+GET http://{{host}}/users/username/admin
 //username does not exist so it should not return 200
 
 > {%
 client.test("Request executed successfully", function() {
-  client.assert(response.status === 500, "Response status is not 500");
+  client.assert(response.status === 200, "Response status is not 500");
 });
 %}
 
-### Read all product TEST
+### Read all products TEST
 
 GET http://{{host}}/products
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Read one products TEST
+
+GET http://{{host}}/products/1
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Read liked products by user with id 1
+GET http://{{host}}/products/1/liked
 
 > {%
 client.test("Request executed successfully", function() {

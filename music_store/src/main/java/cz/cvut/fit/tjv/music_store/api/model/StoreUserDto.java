@@ -10,7 +10,6 @@ import java.util.Optional;
 @ApiModel(value = "User", description = "This entity represents registered user of the store")
 public class StoreUserDto {
     @ApiModelProperty(value = "Identification of the store user")
-    @JsonIgnore
     private int id;
 
     @ApiModelProperty(value = "Second identification of the user", example = "johndoe")
