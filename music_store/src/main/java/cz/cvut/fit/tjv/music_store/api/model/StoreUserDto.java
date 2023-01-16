@@ -1,24 +1,36 @@
 package cz.cvut.fit.tjv.music_store.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Collection;
 import java.util.Optional;
 
+@ApiModel(value = "User", description = "This entity represents registered user of the store")
 public class StoreUserDto {
-
+    @ApiModelProperty(value = "Identification of the store user")
+    @JsonIgnore
     private int id;
+
+    @ApiModelProperty(value = "Second identification of the user", example = "johndoe")
     private String username;
+    @ApiModelProperty(value = "First name of the user", example="John")
     private String name;
+    @ApiModelProperty(value = "Last name of the user", example = "Doe")
     private String surname;
-
+    @ApiModelProperty(value = "Password of the user, it is encrypted (bcrypt)", example = "password123" )
     private String password;
-
+    @ApiModelProperty(value = "Role of the user that gives user authorization in client", example = "USER")
     private String role;
+    @ApiModelProperty(value = "Address of the user", example = "Address 31, City")
     private String address;
+    @ApiModelProperty(value = "Email of the user", example = "johndoe@email.com")
     private String email;
+    @ApiModelProperty(value = "Credit card information of the user", example = "3411 4422 4221 4454")
     private String credit_card;
-
+    @ApiModelProperty(value = "Liked products by user - consists of products id", example = "[1,2,3]")
     private Collection<Integer> likedProducts;
-
     public Collection<Integer> getLikedProducts() {
         return likedProducts;
     }

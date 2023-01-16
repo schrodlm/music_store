@@ -1,18 +1,29 @@
 package cz.cvut.fit.tjv.music_store.api.model;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+@ApiModel(value = "Order", description = "This entity represent order of products created by user")
 public class OrderDto {
 
+    @ApiModelProperty(value = "Identification of the order, it is generated automatically", required = false)
+    @JsonIgnore
     private int id;
+
+    @ApiModelProperty(value = "Identification of the user that created that order", example = "1")
     private int buyer_id;
+
+    @ApiModelProperty(value = "Identification of the products that user bought in that order", example = "[1,2,3]")
     private ArrayList<Integer> items_id;
+
+    @ApiModelProperty(value = "Sum of all product prices included in that order", example = "100")
     private Integer cost;
+    @ApiModelProperty(value = "This value can reach 4 states: [Waiting, Preparing, Shipped, Arrived] and is describing orders current state", example = "Waiting")
     private String order_status;
-    @DateTimeFormat(pattern = "dd.MM.yyyy. HH:mm a")
+    @ApiModelProperty(value = "This value is date of the created order, it is generated automatically and is set to a time when order was created", example = "2022-11-03T12:45:30")
     private LocalDateTime date_of_order = LocalDateTime.now();
 
     public int getId() {

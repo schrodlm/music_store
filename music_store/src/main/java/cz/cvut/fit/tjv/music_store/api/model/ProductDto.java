@@ -1,5 +1,9 @@
 package cz.cvut.fit.tjv.music_store.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /*
 
     This class is temporarily created when JSON wants to refer to our Entities, this is more readable
@@ -8,13 +12,19 @@ package cz.cvut.fit.tjv.music_store.api.model;
     For instance, it gets rid of showing data of joined tables, not necessary
 
  */
-
+@ApiModel(value = "Product", description = "This entity represents products sold by the store")
 public class ProductDto {
 
+    @ApiModelProperty(value = "Identification of the product")
+    @JsonIgnore
     private int id;
+    @ApiModelProperty(value = "Name of the products", example = "Karel Kril LP Vinyl")
     private String product_name;
+    @ApiModelProperty(value = "Current price of the products (in CZK)", example="100")
     private Integer price;
+    @ApiModelProperty(value = "Discount that will later be deducted from the price property (in %), value between 1 - 99", example = "30")
     private Integer discount;
+
 
     public int getId() {
         return id;

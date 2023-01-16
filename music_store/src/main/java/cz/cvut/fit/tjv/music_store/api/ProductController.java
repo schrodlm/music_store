@@ -8,6 +8,10 @@ import cz.cvut.fit.tjv.music_store.api.model.convertor.UserToEntity;
 import cz.cvut.fit.tjv.music_store.bussiness.ProductService;
 import cz.cvut.fit.tjv.music_store.bussiness.StoreUserService;
 import cz.cvut.fit.tjv.music_store.domain.Product;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,8 +39,14 @@ public class ProductController extends AbstractCrudController<Product, ProductDt
     @Autowired
     StoreUserService userService;
 
+     /*
+        FINDS ALL PRODUCTS LIKED BY USER
+     */
     @GetMapping("{id}/liked")
-    public Collection<ProductDto> showLikedProducts(@PathVariable Integer id)
+    @ApiOperation(value = "Find all liked products of user specified by ID")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "The resource not found") })
+    public Collection<ProductDto> showLikedProducts(@ApiParam(name = "id", value = "ID of that user", required = true)@PathVariable Integer id)
     {
 
         Collection<ProductDto> tmp = new ArrayList<>();

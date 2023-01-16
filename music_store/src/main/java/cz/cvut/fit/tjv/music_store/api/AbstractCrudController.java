@@ -12,9 +12,7 @@ import cz.cvut.fit.tjv.music_store.bussiness.AbstractCrudService;
 import cz.cvut.fit.tjv.music_store.domain.DomainEntity;
 import cz.cvut.fit.tjv.music_store.exceptions.EntityStateException;
 import cz.cvut.fit.tjv.music_store.exceptions.InvalidStateException;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,14 +24,9 @@ import java.util.stream.StreamSupport;
 public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
 
     protected AbstractCrudService<E,ID> service;
-
     protected Function<E,D> toDtoConvertor;
-
     protected Function<D,E> toEntityConvertor;
 
-    /*
-    Controller
-     */
 
     public AbstractCrudController(AbstractCrudService<E,ID> service, Function<E,D> toDtoConvertor, Function<D,E> toEntityConvertor ){
 
@@ -42,12 +35,20 @@ public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
         this.toEntityConvertor = toEntityConvertor;
     }
 
-    //RequestBody means that e
+    /*
+        CREATE
+    */
     @PostMapping
-    public D create(@RequestBody D e){
+    @ApiOperation(value = "Creates new entity")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "The resource not found") })
+    public D create(@ApiParam(name="e", value="Entity")@RequestBody D e){
         return toDtoConvertor.apply(service.create(toEntityConvertor.apply(e)));
     }
 
+    /*
+        GET ALL
+    */
     @GetMapping
     @ApiOperation(value = "Return all created instances of that Entity")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
@@ -56,17 +57,26 @@ public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
         return StreamSupport.stream(service.readAll().spliterator(), false).map(toDtoConvertor).toList();
     }
 
+    /*
+        GET ONE
+    */
     @GetMapping("/{id}")
-    @ApiOperation(value = "Returns entity based on ID", notes="ID must be passed as a path variable")
+    @ApiOperation(value = "Returns entity based on ID", notes="ID is passed as a path variable")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "The resource not found") })
-    public D readOne(@PathVariable ID id){
+    public D readOne(@ApiParam(name = "id", value = "ID of that entity", required = true) @PathVariable ID id){
 
         return toDtoConvertor.apply(service.readById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
+    /*
+        UPDATE
+     */
     @PutMapping ("/{id}")
-    public D update(@RequestBody D e, @PathVariable ID id)
+    @ApiOperation(value= "Updates Entity specified by ID", notes="ID is passed as a path variable")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "The resource not found") })
+    public D update(@ApiParam(name = "e", value="updated version of that entity", required = true) @RequestBody D e, @ApiParam(name = "id", value="ID of entity to be updated", required = true) @PathVariable ID id)
     {
         try {
             return toDtoConvertor.apply(service.update(toEntityConvertor.apply(e), id));
@@ -80,9 +90,13 @@ public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
         }
     }
 
-    //DELETE /users/test
-    //PathVariable just says that ID id should be passed to /{id}
+    /*
+        DELETE
+    */
     @DeleteMapping("/{id}")
+    @ApiOperation(value= "Deletes Entity specified by ID", notes="ID is passed as a path variable")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "The resource not found") })
     public void delete(@PathVariable ID id){
         service.deleteById(id);
     }

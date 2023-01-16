@@ -13,11 +13,12 @@ import cz.cvut.fit.tjv.music_store.bussiness.StoreUserService;
 import cz.cvut.fit.tjv.music_store.domain.Order;
 import cz.cvut.fit.tjv.music_store.domain.Product;
 import cz.cvut.fit.tjv.music_store.domain.StoreUser;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,8 +41,14 @@ public class OrderController extends AbstractCrudController<Order, OrderDto, Int
     OrderToEntity toEntity;
 
 
+    /*
+        FIND ORDERS BY USER ID
+     */
     @GetMapping("/user/{id}")
-    public Collection<OrderDto> findOrdersByUser(@PathVariable Integer id)
+    @ApiOperation(value = "Returns all orders of the user specified by ID")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "The resource not found") })
+    public Collection<OrderDto> findOrdersByUser(@ApiParam(name = "id", value = "ID of the user", required = true)@PathVariable Integer id)
     {
 
         StoreUser user = storeUserService.readById(id).orElseThrow();
@@ -56,7 +63,13 @@ public class OrderController extends AbstractCrudController<Order, OrderDto, Int
         return orders;
 
     }
+    /*
+        FIND ORDERS WHERE STATUS IN ("Waiting" | "Preparing")
+     */
     @GetMapping("/important")
+    @ApiOperation(value = "Returns all orders that have status \"Waiting\" or \"Preparing\"")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "The resource not found") })
     public Collection<OrderDto> findByStatusInWaitingOrPreparing(){
 
         Collection<OrderDto> ret = new ArrayList<>();

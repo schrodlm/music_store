@@ -1,5 +1,7 @@
 package cz.cvut.fit.tjv.music_store.domain;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -16,6 +18,7 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "orders")
+@ApiModel(value = "ExampleRequest", description = "Example request model")
 public class Order implements  DomainEntity<Integer> {
 
 
@@ -26,6 +29,7 @@ public class Order implements  DomainEntity<Integer> {
     @Column(name = "cost")
     @Min(10)
     @Max(1000000)
+    @ApiModelProperty(value = "Name of the user", example = "John Doe")
     private Integer cost;
     private String status;
     @Column(name = "date_of_order")
