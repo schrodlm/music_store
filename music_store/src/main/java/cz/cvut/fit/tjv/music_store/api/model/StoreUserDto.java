@@ -31,6 +31,11 @@ public class StoreUserDto {
     private String credit_card;
     @ApiModelProperty(value = "Liked products by user - consists of products id", example = "[1,2,3]")
     private Collection<Integer> likedProducts;
+
+
+
+
+    
     public Collection<Integer> getLikedProducts() {
         return likedProducts;
     }
