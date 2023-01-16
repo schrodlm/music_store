@@ -5,9 +5,28 @@ A three-layered REST application built with the newest version of Spring using G
 ## Features
 - User registration and authentication
 - Create and manage orders
-- Browse and search for music tracks
+- See liked products
 - Add tracks to a shopping cart
-- Checkout and purchase tracks
+- Purchase tracks
+- Show order that are important to ship off
+- Manage users
+
+## Business operation
+This is an operation that uses multiple decision makings on the client side and JPQL query on the server side it will extract all orders from the database that are either "Waiting" or "Preparing", these are important because it is stores matter to prepare them for shipment, they will be sorted to three categories
+- Very Imporant - these are "Waiting" for more than 4 days 
+- Important - these are "Waiting" for more than 2 days or "Preparing" for more than 4 days
+- Not Important - anything less than
+
+![business operation](images/business_op.PNG)
+
+## Documentation 
+
+You are able to see API documentation for HTTP requests and Entity details on http://localhost:8080/swagger-ui/index.html#/ once the server is running
+
+
+## Model of entities
+
+![entity-model](images/diagram.png)
 
 ## Getting Started
 
@@ -37,14 +56,13 @@ A three-layered REST application built with the newest version of Spring using G
 - [Gradle](https://gradle.org/) - Dependency Management
 - [PostgreSQL](https://www.postgresql.org/) - Database
 - [Thymeleaf](https://www.thymeleaf.org/) - Templates engine for web client
+- [Docker](https://www.docker.com/) - OS-level virtualization to deliver software
 
 ## Authors
-- [Your Name](https://github.com/your-username)
+- [Matěj Schrödl](https://github.com/schrodlm)
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 - Hat tip to anyone whose code was used
-- Inspiration
-- etc
