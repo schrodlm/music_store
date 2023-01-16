@@ -35,7 +35,7 @@ public class StoreUserDto {
 
 
 
-    
+
     public Collection<Integer> getLikedProducts() {
         return likedProducts;
     }

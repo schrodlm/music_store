@@ -1,0 +1,19 @@
+
+### Reading all users TEST
+GET http://localhost:8080/users
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+### Reading one user TEST
+GET http://localhost:8080/users/1
+
+> {%
+client.test("Request executed successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+

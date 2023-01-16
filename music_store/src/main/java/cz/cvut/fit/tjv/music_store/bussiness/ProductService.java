@@ -18,6 +18,8 @@ public class ProductService extends AbstractCrudService<Product,Integer>{
         this.productRepository = productRepository;
     }
 
-    public Collection<Product> readLikedProducts (StoreUser user) {return productRepository.findProductsByLikedByContains(user);}
+    public Collection<Product> readLikedProducts (StoreUser user) {
+        return productRepository.findProductsByLikedByContains(user);
+    }
 
 }

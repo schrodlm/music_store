@@ -12,18 +12,24 @@ import java.util.stream.StreamSupport;
 @Component
 public class OrderToDto implements Function<Order, OrderDto> {
     @Override
-    public OrderDto apply(Order order)
-    {
+    public OrderDto apply(Order order) {
         OrderDto ret = new OrderDto();
+
         ret.setId(order.getId());
+        if(order.getBuyer() == null)
+            throw new RuntimeException("Order doesnt have a buyer!");
         ret.setBuyer_id(order.getBuyer().getId());
 
         //setting Array of item ids
         ArrayList<Integer> ids = new ArrayList<>();
-        for(Product p : order.getBoughtItems())
-        {
-            ids.add(p.getId());
+
+        if (order.getBoughtItems() != null){
+
+            for (Product p : order.getBoughtItems()) {
+                ids.add(p.getId());
+            }
         }
+
         ret.setItems_id(ids);
         ret.setCost(order.getCost());
         ret.setOrder_status(order.getStatus());
