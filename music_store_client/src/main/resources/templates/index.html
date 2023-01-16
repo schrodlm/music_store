@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 <head>
     <meta charset="UTF-8">
@@ -49,6 +50,35 @@
         <div class="alert alert-success" th:text="${changedUserMsg}"></div>
     </div>
 
-    <h1> Welcome to our music store!</h1>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Welcome to Music Store</h1>
+        <p class="lead">Find your favourite music and buy it here.</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Rock</h2>
+            <p>Rock music is a genre of popular music that originated as "rock and roll" in the United States in the late 1940s and early 1950s, and developed into a range of different styles in the 1960s and later.</p>
+            <p><a class="btn btn-secondary" href="https://en.wikipedia.org/wiki/Rock_(geology)" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Pop</h2>
+            <p>Pop music is a genre of popular music that originated in the 1950s as a softer alternative to rock and roll and later to rock music.</p>
+            <p><a class="btn btn-secondary" href="https://en.wikipedia.org/wiki/Pop" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Jazz</h2>
+            <p>Jazz is a music genre that originated in the African-American communities of New Orleans, United States, in the late 19th and early 20th centuries, and developed from roots in blues and ragtime.</p>
+            <p><a class="btn btn-secondary" href="https://en.wikipedia.org/wiki/Jazz" role="button">View details &raquo;</a></p>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 </body>
 </html>

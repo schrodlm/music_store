@@ -46,7 +46,18 @@ public class ProductController {
 
         model.addAttribute("loggedUser", authentication.getName());
         model.addAttribute("allProducts", productService.readAll());
-        return "products";
+
+        boolean isAdmin = false;
+
+        //user is admin and edit product and delete product buttons will be showed
+        if(userService.findByUsername(authentication.getName()).orElseThrow().getRole().equals("ADMIN"))
+        {
+            isAdmin = true;
+        }
+        model.addAttribute("isAdmin", isAdmin);
+
+
+            return "products";
     }
 
 
