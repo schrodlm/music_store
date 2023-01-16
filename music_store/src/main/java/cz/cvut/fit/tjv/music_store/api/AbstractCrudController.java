@@ -12,6 +12,9 @@ import cz.cvut.fit.tjv.music_store.bussiness.AbstractCrudService;
 import cz.cvut.fit.tjv.music_store.domain.DomainEntity;
 import cz.cvut.fit.tjv.music_store.exceptions.EntityStateException;
 import cz.cvut.fit.tjv.music_store.exceptions.InvalidStateException;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -46,11 +49,17 @@ public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
     }
 
     @GetMapping
+    @ApiOperation(value = "Return all created instances of that Entity")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "The resource not found") })
     public Collection<D> readAll(){
         return StreamSupport.stream(service.readAll().spliterator(), false).map(toDtoConvertor).toList();
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Returns entity based on ID", notes="ID must be passed as a path variable")
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "The resource not found") })
     public D readOne(@PathVariable ID id){
 
         return toDtoConvertor.apply(service.readById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
