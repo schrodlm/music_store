@@ -52,6 +52,7 @@
                                 <table class="table mb-0">
                                     <thead>
                                     <tr>
+                                        <th scope="col">ID</th>
                                         <th scope="col">USERS</th>
                                         <th scope="col">NAME</th>
                                         <th scope="col">CONTACTS</th>
@@ -61,6 +62,7 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="user : ${allUsers}">
+                                        <th th:text="${user.id}"></th>
                                         <th th:text="${user.username}"></th>
                                         <td th:text="${user.name} + ' ' + ${user.surname}"></td>
                                         <td th:text="${user.email}"></td>

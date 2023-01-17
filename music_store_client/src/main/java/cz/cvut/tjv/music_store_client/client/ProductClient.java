@@ -57,7 +57,7 @@ public class ProductClient {
         return Arrays.asList(productsEndpoint.request(MediaType.APPLICATION_JSON_TYPE).get(ProductDto[].class));
     }
 
-    public Collection<ProductDto> readAllFavourites(Integer loggedUserId)
+    public Collection<ProductDto> readAllFavourites(long loggedUserId)
     {
         activeProductEndpoint = favouriteProductsEndpoint.resolveTemplate("userId",loggedUserId);
         return Arrays.asList(activeProductEndpoint.request(MediaType.APPLICATION_JSON_TYPE).get(ProductDto[].class));

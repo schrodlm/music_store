@@ -23,6 +23,10 @@ This is an operation that uses multiple decision makings on the client side and 
 
 You are able to see API documentation for HTTP requests and Entity details on http://localhost:8080/swagger-ui/index.html#/ once the server is running
 
+## What do I want to implement next
+
+- I am now unable to delete products that are liked by someone because that would require another Entity, I am planning to implement it later on
+- Add a image attribute to product to be able to show images on the client side
 
 ## Model of entities
 

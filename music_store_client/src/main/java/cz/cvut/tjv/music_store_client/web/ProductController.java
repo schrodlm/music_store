@@ -143,9 +143,26 @@ public class ProductController {
     @DeleteMapping("/delete")
     public String deleteProduct(@RequestParam long id, RedirectAttributes redirectAttributes)
     {
+        productService.setActiveProduct(id);
+        ProductDto toDel = productService.readOne().orElseThrow();
 
 
 
+        for(UserDto user : userService.readAll())
+        {
+            for( ProductDto p : productService.readAllFavourites(user.getId()))
+            {
+                // didn't implement deleting products that are liked by someone, this is temporary solution
+                if(p.getId() == toDel.getId())
+                {
+                    String s = "You cannot delete product that is liked by someone! (FOR NOW)";
+                    redirectAttributes.addFlashAttribute("deleted", true);
+                    redirectAttributes.addFlashAttribute("deleteMessage", s);
+                    return "redirect:/products";
+                }
+            }
+
+        }
         productService.setActiveProduct(id);
         ProductDto tmp = productService.readOne().orElseThrow();
         String s = tmp.getProduct_name() + " was deleted!";
@@ -160,15 +177,18 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/liked")
-    public String showLikedProducts(Model model)
+    @GetMapping("/liked/{username}")
+    public String showLikedProducts(@PathVariable("username") String username, Model model)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         model.addAttribute("loggedUser", authentication.getName());
 
 
-        model.addAttribute("likedProducts", productService.readAllFavourites());
+        userService.setActiveUser(username);
+        long userId = userService.readOne().orElseThrow().getId();
+
+        model.addAttribute("likedProducts", productService.readAllFavourites(userId));
         return "likedProducts";
 
     }

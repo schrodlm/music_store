@@ -42,11 +42,11 @@
     </div>
 </nav>
 
-    <div th:if="${messageTrue}" class="container">
+    <div  th:if="${messageTrue}" class="container py-3">
         <div class="alert alert-warning" th:text="${message}"></div>
     </div>
 
-    <div th:if="${changedUserTrue}" class="container">
+    <div th:if="${changedUserTrue}" class="container py-3">
         <div class="alert alert-success" th:text="${changedUserMsg}"></div>
     </div>
 

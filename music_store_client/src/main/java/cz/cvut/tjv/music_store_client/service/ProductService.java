@@ -37,11 +37,9 @@ public class ProductService {
 
     @Autowired
     UserService userService;
-    public Collection<ProductDto> readAllFavourites()
+    public Collection<ProductDto> readAllFavourites(long userId)
     {
-        Integer loggedUserId = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElseThrow().getId();
-
-        return productClient.readAllFavourites(loggedUserId);
+        return productClient.readAllFavourites(userId);
     }
     public void update(ProductDto productDto)
     {

@@ -44,11 +44,11 @@
 
 <h1> Orders </h1>
 
-<div th:if="${deleted}" class="container alert alert-success">
+<div th:if="${deleted}" class="container alert alert-success py-3">
   <strong> Success! </strong><span th:text="${deleteMessage}"> </span>
 </div>
 
-<div th:if="${changeStatus}" class="alert alert-success container">
+<div th:if="${changeStatus}" class="alert alert-success container py-3">
   <span th:text="${changeStatusMsg}"> </span>
 </div>
 
@@ -59,7 +59,7 @@
         <div class="row justify-content-center">
           <div class="col-12">
             <div class="table-responsive bg-white">
-              <div class="form-button mt-3 col-second">
+              <div class="form-button mt-3 col-second py-3">
                 <a href="#" th:href="@{/orders/important}"> <button id="submit" type="submit" class="btn btn-outline-dark">Important orders</button></a>
               </div>
               <table class="table mb-0">

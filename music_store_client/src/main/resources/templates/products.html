@@ -111,14 +111,14 @@
                       <button type="submit" id="submitButton" class="btn btn-danger btn-circle btn-circle-sm m-1"><i class="bi bi-trash"></i> </button>
                     </form>
                   </td>
-                  <td>
+                  <td th:unless="${isAdmin}">
                     <form th:action="@{'/users/liked/' + ${product.id}}" method="post">
                       <input type="hidden" name="_method" value="post"/>
                       <button class="btn btn-warning btn-circle btn-circle-sm m-1" type="submit"><i class="bi-star"></i></button>
                     </form>
                   </td>
 
-                  <td>
+                  <td th:unless="${isAdmin}">
                     <form th:action="@{'/orders/add/'+ ${product.id}}" method="post">
                       <input type="hidden" name="_method" value="post"/>
                       <button class="btn btn-warning btn-circle btn-circle-sm m-1" type="submit"><i class="bi bi-bag-plus"></i></button>
