@@ -37,7 +37,7 @@
 
         - POSTGRES_USER=postgres
 
-        - POSTGRES_PASSWORD=password
+        - POSTGRES_PASSWORD=passwordTest
 
         - POSTGRES_DB=music_store
 
@@ -62,4 +62,6 @@
     client:
       image: schrodlm/music_store_client:latest
 
+      ports:
+        - '8081:8081'
 
