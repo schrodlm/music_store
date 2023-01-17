@@ -8,15 +8,12 @@
 
       restart: always
 
-      container_name: music_store
+      container_name: music_store_db
 
       environment:
 
         - POSTGRES_USER=postgres
-
         - POSTGRES_PASSWORD=password
-
-        - POSTGRES_DB=music_store_test
 
       ports:
 
@@ -26,12 +23,13 @@
 
         - .docker/postgres-data:/var/lib/postgresql/data
 
+
     postgresTest:
       image: postgres:latest
 
       restart: always
 
-      container_name: testMusic-Store
+      container_name: music_store_db_testing
 
       environment:
 
@@ -39,7 +37,6 @@
 
         - POSTGRES_PASSWORD=passwordTest
 
-        - POSTGRES_DB=music_store
 
       ports:
 
@@ -47,20 +44,18 @@
 
     api:
 
-      image: schrodlm/music_store_server:latest
-
+      image: music_store_server
+      container_name: music_store_api
       depends_on:
 
         - postgres
-        - postgresTest
 
       ports:
 
         - '8080:8080'
 
-
     client:
-      image: schrodlm/music_store_client:latest
+      image: schrodlm/music_store_client
 
       ports:
         - '8081:8081'
