@@ -34,5 +34,5 @@ tasks.named('test') {
 }
 
 bootBuildImage{
-	imageName="music_store_client"
+	imageName="schrodlm/music_store_client"
 }

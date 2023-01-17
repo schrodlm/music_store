@@ -47,7 +47,7 @@
 
     api:
 
-      image: music_store_server
+      image: schrodlm/music_store_server:latest
 
       depends_on:
 
@@ -60,6 +60,6 @@
 
 
     client:
-      image: music_store_client
+      image: schrodlm/music_store_client:latest
 
 
