@@ -11,9 +11,9 @@
       container_name: music_store_db
 
       environment:
-
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=password
+        - POSTGRES_USER=tjv
+        - POSTGRES_PASSWORD=tjv
+        - POSTGRES_DB=tjv_db
 
       ports:
 
@@ -23,24 +23,6 @@
 
         - .docker/postgres-data:/var/lib/postgresql/data
 
-
-    postgresTest:
-      image: postgres:latest
-
-      restart: always
-
-      container_name: music_store_db_testing
-
-      environment:
-
-        - POSTGRES_USER=postgres
-
-        - POSTGRES_PASSWORD=passwordTest
-
-
-      ports:
-
-        - '5433:5432'
 
     api:
 
@@ -53,6 +35,11 @@
       ports:
 
         - '8080:8080'
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://music_store_db/tjv_db
+        SPRING_DATASOURCE_USERNAME: tjv
+        SPRING_DATASOURCE_PASSWORD: tjv
+
 
     client:
       image: schrodlm/music_store_client:latest
