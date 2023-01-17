@@ -36,5 +36,5 @@ test {
 
 
 bootBuildImage {
-	imageName='music_store_server'
+	imageName='schrodlm/music_store_server'
 		}
