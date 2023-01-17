@@ -32,18 +32,21 @@
         <a class="nav-link active" aria-current="page" href="/">Home</a>
         <a class="nav-link" th:utext="@{'<i class=&quotbi bi-person&quot></i>' + ' ' + ${loggedUser}}"   th:href="@{'/users/edit?usrname=' + ${loggedUser}}"></a>
         <a class="nav-link" href="/products">Products</a>
+        <a class="nav-link" th:href="@{'/orders/user/' + ${loggedUser}}"> My orders </a>
+        <a class="nav-link" th:href="@{'/products/liked/' + ${loggedUser}}">Liked Products</a>
+
         <a class="nav-link" href="/orders">Orders</a>
-        <a class="nav-link" href="/products/liked">Liked Products</a>
         <a class="nav-link" href="/users">Users</a>
 
       </div>
     </div>
-    <div class="navbar-right" style="float: right;">
+    <div class="justify-content-right">
       <a class="nav-link" href="/logout"><button class="btn btn-light btn-circle btn-circle-sm m-1">Logout   <i class="bi bi-box-arrow-right"></i></button></a>
     </div>
 
   </div>
 </nav>
+
 
   <h1> Products </h1>
 

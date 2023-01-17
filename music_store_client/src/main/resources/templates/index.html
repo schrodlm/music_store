@@ -28,7 +28,7 @@
                 <a class="nav-link" th:utext="@{'<i class=&quotbi bi-person&quot></i>' + ' ' + ${loggedUser}}"   th:href="@{'/users/edit?usrname=' + ${loggedUser}}"></a>
                 <a class="nav-link" href="/products">Products</a>
                 <a class="nav-link" th:href="@{'/orders/user/' + ${loggedUser}}"> My orders </a>
-                <a class="nav-link" href="/products/liked">Liked Products</a>
+                <a class="nav-link" th:href="@{'/products/liked/' + ${loggedUser}}">Liked Products</a>
 
                 <a class="nav-link" href="/orders">Orders</a>
                 <a class="nav-link" href="/users">Users</a>
@@ -80,5 +80,10 @@
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script>
+    $(function(){
+        $("#nav-placeholder").load("nav.html");
+    });
+</script>
 </body>
 </html>

@@ -17,11 +17,18 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/*
+    Handles all request for Order Entity
+ */
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
 
     private OrderService orderService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    ProductService productService;
 
     public OrderController(OrderService orderService)
     {
@@ -58,10 +65,7 @@ public class OrderController {
 
     }
 
-    @Autowired
-    UserService userService;
-    @Autowired
-    ProductService productService;
+
     @GetMapping("/user/{username}")
     public String showMyOrders(@PathVariable String username, Model model)
     {
