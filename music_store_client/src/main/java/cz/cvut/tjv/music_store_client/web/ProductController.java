@@ -4,26 +4,23 @@ import cz.cvut.tjv.music_store_client.dto.ProductDto;
 import cz.cvut.tjv.music_store_client.dto.UserDto;
 import cz.cvut.tjv.music_store_client.service.ProductService;
 import cz.cvut.tjv.music_store_client.service.UserService;
-import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
+
+/*
+    Handles all request for Order Entity
+*/
 @Controller
 @RequestMapping("/products")
 public class ProductController {
@@ -38,6 +35,11 @@ public class ProductController {
     }
 
 
+    //==================================================================================================================
+    //                                          SHOWING PRODUCTS
+    //==================================================================================================================
+
+    //Show all products from the database
     @GetMapping
     public String products(Model model)
     {
@@ -47,9 +49,11 @@ public class ProductController {
         model.addAttribute("loggedUser", authentication.getName());
         model.addAttribute("allProducts", productService.readAll());
 
+
+        //user is admin and edit product and delete product buttons will be shown
+        // -> otherwise add to cart and add to favourite will be shown - for the normal users
         boolean isAdmin = false;
 
-        //user is admin and edit product and delete product buttons will be showed
         if(userService.findByUsername(authentication.getName()).orElseThrow().getRole().equals("ADMIN"))
         {
             isAdmin = true;
@@ -61,9 +65,11 @@ public class ProductController {
     }
 
 
-    //===========================
-    //EDIT
-    //===========================
+    //==================================================================================================================
+    //                                          EDIT PRODUCTS
+    //==================================================================================================================
+
+    // Edit product
     @GetMapping("/edit")
     public String editProduct(@RequestParam long id, Model model)
     {
@@ -76,6 +82,7 @@ public class ProductController {
         return "productEdit";
     }
 
+    // Submit edited product
     @PostMapping("/edit")
     public String submitEditProduct(@Valid @ModelAttribute("product") ProductDto productDto, BindingResult bindingResult, Model model)
     {
@@ -102,9 +109,9 @@ public class ProductController {
 
 
 
-    //===========================
-    //CREATE
-    //===========================
+    //==================================================================================================================
+    //                                          CREATE PRODUCTS
+    //==================================================================================================================
     @GetMapping("/create")
     public String createProduct(Model model)
     {
@@ -116,7 +123,7 @@ public class ProductController {
         return "productCreate";
     }
 
-
+    // Submit created order
     @PostMapping("/create")
     public String createProduct(@Valid @ModelAttribute("product") ProductDto productDto, BindingResult bindingResult, Model model)
     {
@@ -140,13 +147,14 @@ public class ProductController {
         return "redirect:/products";
     }
 
+    //==================================================================================================================
+    //                                          DELETE PRODUCTS
+    //==================================================================================================================
     @DeleteMapping("/delete")
     public String deleteProduct(@RequestParam long id, RedirectAttributes redirectAttributes)
     {
         productService.setActiveProduct(id);
         ProductDto toDel = productService.readOne().orElseThrow();
-
-
 
         for(UserDto user : userService.readAll())
         {
@@ -177,12 +185,18 @@ public class ProductController {
         return "redirect:/products";
     }
 
+    //==================================================================================================================
+    //                                          LIKED PRODUCTS
+    //==================================================================================================================
+
+    // show products liked by specific user
     @GetMapping("/liked/{username}")
     public String showLikedProducts(@PathVariable("username") String username, Model model)
     {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         model.addAttribute("loggedUser", authentication.getName());
+        model.addAttribute("likedUsername", username);
 
 
         userService.setActiveUser(username);
@@ -192,20 +206,20 @@ public class ProductController {
         return "likedProducts";
 
     }
-
-    @PostMapping("/liked/{productId}")
-    public String removeLikedProduct(@PathVariable("productId") Integer productId,RedirectAttributes redirectAttributes)
+    // removes liked product of a specific user
+    @PostMapping("/liked/{username}/{productId}")
+    public String removeLikedProduct(@PathVariable("username") String username, @PathVariable("productId") Integer productId,RedirectAttributes redirectAttributes)
     {
-        UserDto loggedUser = userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()).orElseThrow();
+        UserDto userToDeleteLikedFrom = userService.findByUsername(username).orElseThrow();
 
-        Collection<Integer> newLiked = loggedUser.getLikedProducts();
+        Collection<Integer> newLiked = userToDeleteLikedFrom.getLikedProducts();
         newLiked.remove(productId);
 
-        userService.update(loggedUser);
+        userService.update(userToDeleteLikedFrom);
 
         redirectAttributes.addFlashAttribute("favouriteDeletedSuccess", true);
 
-        return "redirect:/products/liked";
+        return "redirect:/products/liked/" + username;
 
     }
 

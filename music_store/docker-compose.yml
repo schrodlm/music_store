@@ -1,0 +1,65 @@
+  version: '3.7'
+
+  services:
+
+    postgres:
+
+      image: postgres:latest
+
+      restart: always
+
+      container_name: music_store
+
+      environment:
+
+        - POSTGRES_USER=postgres
+
+        - POSTGRES_PASSWORD=password
+
+        - POSTGRES_DB=music_store_test
+
+      ports:
+
+        - '5432:5432'
+
+      volumes:
+
+        - .docker/postgres-data:/var/lib/postgresql/data
+
+    postgresTest:
+      image: postgres:latest
+
+      restart: always
+
+      container_name: testMusic-Store
+
+      environment:
+
+        - POSTGRES_USER=postgres
+
+        - POSTGRES_PASSWORD=password
+
+        - POSTGRES_DB=music_store
+
+      ports:
+
+        - '5433:5432'
+
+    api:
+
+      image: music_store_server
+
+      depends_on:
+
+        - postgres
+        - postgresTest
+
+      ports:
+
+        - '8080:8080'
+
+
+    client:
+      image: music_store_client
+
+

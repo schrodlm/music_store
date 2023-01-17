@@ -33,3 +33,8 @@ test {
 	systemProperties['spring.config.name'] = 'application-test'
 	systemProperties['spring.config.location'] = 'file:src/test/resources/'
 }
+
+
+bootBuildImage {
+	imageName='music_store_server'
+		}
