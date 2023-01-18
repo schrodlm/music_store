@@ -1,5 +1,9 @@
   version: '3.7'
 
+
+  volumes:
+    db-data:
+
   services:
 
     postgres:
@@ -11,9 +15,9 @@
       container_name: music_store_db
 
       environment:
+        - POSTGRES_DB=tjv_db
         - POSTGRES_USER=tjv
         - POSTGRES_PASSWORD=tjv
-        - POSTGRES_DB=tjv_db
 
       ports:
 
@@ -21,7 +25,8 @@
 
       volumes:
 
-        - .docker/postgres-data:/var/lib/postgresql/data
+        - db-data:/var/lib/postgresql/data
+
 
 
     api:
@@ -46,4 +51,3 @@
 
       ports:
         - '8081:8081'
-
