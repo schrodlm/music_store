@@ -31,7 +31,7 @@
 
     api:
 
-      image: schrodlm/music_store_server:latest
+      image: schrodlm/music_store_server-1:latest
       container_name: music_store_api
       depends_on:
 
@@ -47,7 +47,9 @@
 
 
     client:
-      image: schrodlm/music_store_client:latest
+      image: schrodlm/music_store_client-1:latest
 
       ports:
         - '8081:8081'
+      environment:
+        SERVER_URL: http://api:8080

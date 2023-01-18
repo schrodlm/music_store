@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
@@ -80,8 +81,11 @@ public class UserController {
     @GetMapping("/edit")
     public String editUser(@RequestParam String usrname, Model model)
     {
+        userService.setActiveUser(usrname);
 
-
+        //user doesnt exist
+        if(userService.readOne().isEmpty())
+            return "redirect:/";
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -90,11 +94,11 @@ public class UserController {
         //user trying to access this page is not admin and is trying to access different account
         if(!userService.findByUsername(authentication.getName()).orElseThrow().getRole().equals("ADMIN") && !authentication.getName().equals(usrname))
         {
+
             return "redirect:/";
         }
 
 
-        userService.setActiveUser(usrname);
         model.addAttribute("user", userService.readOne().orElseThrow());
         return "userEdit";
     }

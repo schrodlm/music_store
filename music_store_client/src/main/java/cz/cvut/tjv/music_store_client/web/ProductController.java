@@ -84,7 +84,7 @@ public class ProductController {
 
     // Submit edited product
     @PostMapping("/edit")
-    public String submitEditProduct(@Valid @ModelAttribute("product") ProductDto productDto, BindingResult bindingResult, Model model)
+    public String submitEditProduct(@Valid @ModelAttribute("product") ProductDto productDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes)
     {
 
         productService.setActiveProduct(productDto.getId());
@@ -102,9 +102,13 @@ public class ProductController {
         {
             model.addAttribute("error",true);
             model.addAttribute("errorMsg", e.getMessage());
+            model.addAttribute("product", productDto);
+            return "productEdit";
+
         }
-        model.addAttribute("product", productDto);
-        return "productEdit";
+        redirectAttributes.addFlashAttribute("productEdited", true);
+
+        return "redirect:/products";
     }
 
 

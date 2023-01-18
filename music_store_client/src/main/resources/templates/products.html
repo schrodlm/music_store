@@ -21,6 +21,11 @@
   <strong> Success! </strong><span th:text="${deleteMessage}"> </span>
   </div>
 
+<div th:if="${productEdited}" class="container alert alert-success">
+  <div class="alert alert-success"> Product was edited! </div>
+</div>
+
+
   <div class="container" th:if="${favouriteSuccess}">
     <div class="alert alert-success"> Product was added to your favourites! </div>
   </div>
