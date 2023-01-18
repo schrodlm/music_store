@@ -40,9 +40,14 @@ public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
     @PostMapping
     @ApiOperation(value = "Creates new entity")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "The resource not found") })
+            @ApiResponse(code = 409, message = "Entity already exists") })
     public D create(@ApiParam(name="e", value="Entity")@RequestBody D e){
-        return toDtoConvertor.apply(service.create(toEntityConvertor.apply(e)));
+        try {
+            return toDtoConvertor.apply(service.create(toEntityConvertor.apply(e)));
+        }
+        catch(EntityStateException ex) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
     }
 
     /*
@@ -50,8 +55,7 @@ public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
     */
     @GetMapping
     @ApiOperation(value = "Return all created instances of that Entity")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "The resource not found") })
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK")})
     public Collection<D> readAll(){
         return StreamSupport.stream(service.readAll().spliterator(), false).map(toDtoConvertor).toList();
     }
@@ -65,7 +69,14 @@ public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
             @ApiResponse(code = 404, message = "The resource not found") })
     public D readOne(@ApiParam(name = "id", value = "ID of that entity", required = true) @PathVariable ID id){
 
-        return toDtoConvertor.apply(service.readById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND)));
+        try{
+            return toDtoConvertor.apply(service.readById(id).orElseThrow());
+        }
+        catch(InvalidStateException ex)
+        {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
     }
 
     /*
@@ -73,8 +84,10 @@ public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
      */
     @PutMapping ("/{id}")
     @ApiOperation(value= "Updates Entity specified by ID", notes="ID is passed as a path variable")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "The resource not found") })
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 404, message = "The resource not found"),
+            @ApiResponse(code = 409, message = "Entity is in invalid state")})
     public D update(@ApiParam(name = "e", value="updated version of that entity", required = true) @RequestBody D e, @ApiParam(name = "id", value="ID of entity to be updated", required = true) @PathVariable ID id)
     {
         try {
@@ -97,6 +110,13 @@ public abstract class AbstractCrudController<E extends DomainEntity<ID>,D, ID> {
     @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 404, message = "The resource not found") })
     public void delete(@PathVariable ID id){
-        service.deleteById(id);
+        try
+        {
+            service.deleteById(id);
+        }
+        catch(InvalidStateException ex)
+        {
+            throw  new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 }

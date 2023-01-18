@@ -28,7 +28,8 @@ public class AbstractCrudService<E extends DomainEntity<K>, K> {
      */
     public E create(E entity) throws EntityStateException {
        if(repository.existsById(entity.getId()))
-           throw new  ResponseStatusException(HttpStatus.NOT_FOUND);
+           throw new EntityStateException(entity);
+
        return repository.save(entity);
     }
 
@@ -55,7 +56,10 @@ public class AbstractCrudService<E extends DomainEntity<K>, K> {
     }
     public void deleteById(K id)
     {
+        if(repository.existsById(id))
         repository.deleteById(id);
+
+        else throw new InvalidStateException();
     }
 
 }
