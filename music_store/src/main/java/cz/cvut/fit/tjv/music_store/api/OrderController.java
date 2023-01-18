@@ -13,12 +13,15 @@ import cz.cvut.fit.tjv.music_store.bussiness.StoreUserService;
 import cz.cvut.fit.tjv.music_store.domain.Order;
 import cz.cvut.fit.tjv.music_store.domain.Product;
 import cz.cvut.fit.tjv.music_store.domain.StoreUser;
+import cz.cvut.fit.tjv.music_store.exceptions.EntityStateException;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -47,20 +50,18 @@ public class OrderController extends AbstractCrudController<Order, OrderDto, Int
     @GetMapping("/user/{id}")
     @ApiOperation(value = "Returns all orders of the user specified by ID")
     @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "The resource not found") })
+            @ApiResponse(code = 404, message = "The user does not exist") })
     public Collection<OrderDto> findOrdersByUser(@ApiParam(name = "id", value = "ID of the user", required = true)@PathVariable Integer id)
     {
+            StoreUser user = storeUserService.readById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
-        StoreUser user = storeUserService.readById(id).orElseThrow();
+            Collection<OrderDto> orders = new ArrayList<>();
 
-        Collection<OrderDto> orders = new ArrayList<>();
+            for (var order : service.findOrdersByUser(user)) {
+                orders.add(toDto.apply(order));
+            }
 
-        for(var order : service.findOrdersByUser(user))
-        {
-            orders.add(toDto.apply(order));
-        }
-
-        return orders;
+            return orders;
 
     }
     /*
@@ -68,8 +69,7 @@ public class OrderController extends AbstractCrudController<Order, OrderDto, Int
      */
     @GetMapping("/important")
     @ApiOperation(value = "Returns all orders that have status \"Waiting\" or \"Preparing\"")
-    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
-            @ApiResponse(code = 404, message = "The resource not found") })
+    @ApiResponses(value = { @ApiResponse(code = 200, message = "OK")})
     public Collection<OrderDto> findByStatusInWaitingOrPreparing(){
 
         Collection<OrderDto> ret = new ArrayList<>();

@@ -13,7 +13,9 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,7 +53,7 @@ public class ProductController extends AbstractCrudController<Product, ProductDt
 
         Collection<ProductDto> tmp = new ArrayList<>();
 
-        for(Product p : service.readLikedProducts(userService.readById(id).orElseThrow()))
+        for(Product p : service.readLikedProducts(userService.readById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND))))
         {
             tmp.add(toDto.apply(p));
         }
