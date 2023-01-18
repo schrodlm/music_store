@@ -40,17 +40,23 @@ You are able to see API documentation for HTTP requests and Entity details on ht
 - PostgreSQL 12 or higher
 
 ### Installation
-1. Clone the repository: `git clone https://github.com/your-username/music-store.git`
-2. Navigate to the project directory: `cd music-store`
-3. Build the project: `gradle build`
-4. Create a PostgreSQL database and configure the database connection settings in `src/main/resources/application.properties`
-5. Run the project: `gradle bootRun`
-6. Visit `http://localhost:8080` in your web browser to access the application
+
+## Running the app
+1. Clone the repository: git clone https://github.com/schrodlm/music-store.git
+2. Navigate to the server directory: cd music-store
+3. In your terminal run command docker compose up
+4. Visit http://localhost:8081 in your web browser to access the application
+
+## Running tests
+1. Navigate to the server directory: cd music-store
+2. Create a testing database with command: docker run --name music-store-testing-db -p 5433:5432 -e POSTGRES_PASSWORD=passwordTest -d postgres
+3. Run Test task in music-store file with gradle 
 
 ### Usage
 - Register an account or use the following credentials to log in as an administrator:
-  - Email: `admin@example.com`
+  - username: `admin`
   - Password: `password`
+  
 - Browse and search for music tracks
 - Add tracks to your shopping cart
 - Checkout and purchase tracks
