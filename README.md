@@ -50,7 +50,7 @@ You are able to see API documentation for HTTP requests and Entity details on ht
 ## Running tests
 1. Navigate to the server directory: `cd music-store`
 2. Create a testing database with command: `docker run --name music-store-testing-db -p 5433:5432 -e POSTGRES_PASSWORD=passwordTest -d postgres`
-3. Run Test task in music-store file with gradle 
+3. Run Test task in music-store file with gradle `./gradlew Test` or manually in IntelliJ IDE
 
 ### Usage
 - Register an account or use the following credentials to log in as an administrator:
