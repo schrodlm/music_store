@@ -44,7 +44,7 @@ You are able to see API documentation for HTTP requests and Entity details on ht
 ## Running the app
 1. Clone the repository: git clone https://github.com/schrodlm/music-store.git
 2. Navigate to the server directory: `cd music-store`
-3. In your terminal run command docker compose up
+3. In your terminal run command `docker compose up`
 4. Visit http://localhost:8081 in your web browser to access the application
 
 ## Running tests
@@ -53,7 +53,7 @@ You are able to see API documentation for HTTP requests and Entity details on ht
 3. Run Test task in music-store file with gradle `./gradlew Test` or manually in IntelliJ IDE
 
 ### Usage
-- Register an account or use the following credentials to log in as an administrator:
+- If you register with these credentials you will be registered as an administrator:
   - username: `admin`
   - Password: `password`
   
